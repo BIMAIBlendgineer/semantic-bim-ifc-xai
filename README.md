@@ -1,4 +1,4 @@
-# Semantic XAIBIM
+﻿# Semantic XAIBIM
 
 Semantic XAIBIM is an open research toolkit for Semantic BIM/IFC, prompt-to-structure tasks, explainable AI outputs, and reproducible benchmark evidence.
 
@@ -27,6 +27,16 @@ This repository is not:
 - A full training workspace.
 - A repository of private BIM models.
 - A repository of raw model adapters or internal experiment logs.
+
+
+## Live demo
+
+A public replay demo is available on Hugging Face Spaces:
+
+- Space: https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay
+- Direct app: https://bimaiblend-semantic-xaibim-replay.hf.space
+
+The demo loads the reduced public JSONL sample and displays prompt payloads, canonical outputs, parsed outputs and validation metadata. It does not run model inference.
 
 ## Public evidence
 
@@ -65,3 +75,4 @@ Current public evidence status:
     RESEARCH_PASS
 
 This means preliminary research evidence. It does not imply product readiness, certification, or deployment approval.
+

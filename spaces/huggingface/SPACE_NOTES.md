@@ -26,3 +26,10 @@ Expected Space files:
 - app.py
 - requirements.txt
 - sample20_public_predictions.jsonl
+
+## Published instance
+
+- Space: https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay
+- Direct app: https://bimaiblend-semantic-xaibim-replay.hf.space
+- Status: published and running
+

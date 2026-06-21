@@ -1,4 +1,4 @@
-# Hugging Face Space Plan
+﻿# Hugging Face Space Plan
 
 Purpose:
 
@@ -9,3 +9,12 @@ Purpose:
 - Avoid exposing raw training workspaces or model adapters.
 
 Initial implementation can use Gradio with static JSONL examples.
+
+## Published Space
+
+- Space: https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay
+- Direct app: https://bimaiblend-semantic-xaibim-replay.hf.space
+- Status: published and running
+- Mode: public replay demo
+- Inference: disabled
+
