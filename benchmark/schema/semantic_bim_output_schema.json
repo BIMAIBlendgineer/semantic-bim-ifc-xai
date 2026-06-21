@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Semantic XAIBIM Public Output Schema",
+  "type": "object",
+  "description": "Reduced public schema for Semantic BIM/IFC structured outputs.",
+  "additionalProperties": true,
+  "properties": {
+    "prompt": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "input": {
+      "type": [
+        "string",
+        "object",
+        "null"
+      ]
+    },
+    "output": {
+      "type": [
+        "object",
+        "string",
+        "null"
+      ]
+    },
+    "expected": {
+      "type": [
+        "object",
+        "string",
+        "null"
+      ]
+    },
+    "canonical_output": {
+      "type": [
+        "object",
+        "string",
+        "null"
+      ]
+    },
+    "ifc_class": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "semantic_type": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "intent_class": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "value_mode": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "confidence": {
+      "type": [
+        "string",
+        "number",
+        "null"
+      ]
+    },
+    "missing_inputs": {
+      "type": [
+        "array",
+        "null"
+      ]
+    },
+    "evidence": {
+      "type": [
+        "array",
+        "object",
+        "string",
+        "null"
+      ]
+    }
+  }
+}
