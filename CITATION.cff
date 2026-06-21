@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+title: "Semantic XAIBIM: Semantic BIM/IFC Research Toolkit"
+message: "If you use Semantic XAIBIM in academic work, please cite this repository."
+type: software
+authors:
+  - family-names: "Mousinho de Lima"
+    given-names: "Dean Delmo"
+repository-code: "https://github.com/BIMAIBlendgineer/semantic"
+abstract: "Open research toolkit for Semantic BIM/IFC, prompt-to-structure tasks, explainable AI outputs and reproducible benchmark evidence."
+keywords:
+  - BIM
+  - IFC
+  - Semantic BIM
+  - Explainable AI
+  - Benchmark
+  - AECO
+license: MIT
