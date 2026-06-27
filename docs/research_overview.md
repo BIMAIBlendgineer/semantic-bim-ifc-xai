@@ -1,69 +1,74 @@
-# Research Overview: Semantic AI in Civil Engineering and BIM/IFC Interpretation
+# Research Overview
 
-This document provides a dense, encyclopedic explanation of the theoretical and practical foundations of Semantic AI as applied to Building Information Modeling (BIM) and the Industry Foundation Classes (IFC) schema.
+## 1. Engineering Problem
 
----
+BIM projects contain geometric, alphanumeric and documentary information. However, much engineering intent still appears as natural language: requirements, comments, design decisions, review notes, specifications and coordination instructions. The research question is how AI can interpret this natural language and map it to structured BIM/IFC concepts without losing traceability.
 
-## 1. Semantic AI in Civil Engineering
-
-Civil engineering projects are defined by strict structural, material, safety, and regulatory requirements. In traditional workflows, these requirements are authored in natural language text (e.g., design briefs, structural calculation reports, municipal building codes, and client emails) and then manually input into digital models by human operators.
-
-**Semantic AI** serves as an intelligent bridge, parsing the unstructured intent of natural language and translating it into standardized digital model parameters. In civil engineering, this is critical because:
-- **Design Intent Mapping**: It allows engineers to query or define structural components using functional language (e.g., *"heavy load slab"* or *"retaining wall adjacent to excavation"*) rather than searching through thousands of manual parameter fields.
-- **Standards Compliance Automation**: Automated translation allows software to cross-reference design prompts directly against building code specifications, verifying compliance before drawing or modeling begins.
-- **Knowledge Representation**: Traditional databases store values, but Semantic AI helps capture the relationship and engineering logic behind those values.
+On active construction and engineering projects, communication is often unstructured. The translation from natural-language engineering intent (e.g. email threads or client requirements) to physical databases must be systematized to reduce structural errors, misalignment, and parameter corruption.
 
 ---
 
-## 2. BIM/IFC Semantic Interpretation
+## 2. BIM as Information Management
 
-A digital BIM model consists of two primary layers:
-1. **Geometry (LOD)**: The coordinates, shapes, lines, boundaries, and meshes that define what the building looks like in 3D space.
-2. **Semantics (LOI)**: The meaning, classifications, properties, relationships, and metadata that define what the building *is* and how it *behaves*.
+Under the global standards such as **ISO 19650**, Building Information Modeling (BIM) is defined not merely as a 3D CAD modeling process, but as a collaborative, structured framework for managing information over the entire lifecycle of a built asset. 
 
-The Industry Foundation Classes (IFC) schema represents the open ISO standard for this semantic layer. Interpreting BIM/IFC semantically involves parsing a human instruction and identifying:
-- **Entity Classification**: Deciding whether an element is an `IfcColumn`, `IfcWallStandardCase`, `IfcBeam`, or `IfcSlab`.
-- **Property Set Grounding**: Mapping descriptive parameters to canonical IFC Property Sets (e.g., mapping *"resists fire for 2 hours"* to `Pset_WallCommon.FireRating = "120"`).
-- **Material Association**: Inferring material types, concrete grades, or steel specifications based on contextual prompts.
+ISO 19650 introduces concepts such as:
+- **Exchange Information Requirements (EIR)**: Defining exactly what data needs to be delivered at different phases.
+- **Common Data Environment (CDE)**: The single source of truth for all project information.
+- **Level of Information Need**: Specifying the quantity, quality, and granularity of geometric and non-geometric information.
 
----
-
-## 3. Engineering Meaning vs. Natural-Language Meaning
-
-A major challenge in building AI systems for engineering is the divergence between everyday language and precise technical terminology:
-- **Ambiguity in Natural Language**: A word like "support" in plain English could mean structural support (column/beam), IT support, financial backing, or document reference.
-- **Precision in Engineering**: In a structural schema, a "support" must map to a concrete structural entity (e.g., `IfcStructuralMember`, `IfcColumn`, or `IfcFooting`) with specific load-bearing properties (`LoadBearing = True`).
-- **Semantic Drift**: Machine learning models trained on general internet text lack the semantic grounding required for engineering. For instance, a general LLM might classify a "retaining wall" as just a "wall" (`IfcWall`), whereas an engineer knows it carries lateral earth pressure and must satisfy unique structural validation constraints.
-
-Semantic AI research focuses on aligning these boundaries, forcing the neural network to output classifications that are semantically constrained by the target domain's engineering laws.
+Semantic AI research aims to automate the translation of natural-language requirements directly into these regulated structures.
 
 ---
 
-## 4. Why JSON Contracts Are Used
+## 3. IFC as Semantic Infrastructure
 
-To interface unstructured LLM outputs with deterministic BIM authoring software (such as Autodesk Revit or Bentley OpenBuildings), this research utilizes a structured contract schema serialized in JSON/JSONL format. 
+To ensure software interoperability, the industry relies on the **Industry Foundation Classes (IFC)** schema (ISO 16739). IFC is an open, object-oriented data specification that provides a logical framework to represent building components, properties, and relationships.
 
-JSON contracts are essential because:
-- **Deterministic API Interoperability**: AI models output variable text, but BIM databases require strict, typed inputs. The JSON contract acts as a translation layer.
-- **Traceability Preservation**: The contract encapsulates not just the output class, but also the metadata, enabling developers to trace the prompt source, confidence scores, and validation status.
-- **Decoupled Architecture**: By standardizing the communication format, researchers can change the underlying model (e.g., swapping a fine-tuned model for an API-based LLM) without breaking the validation harness or downstream BIM plugin connectors.
-
----
-
-## 5. Why Validation Matters
-
-If an AI hallucinates a non-existent parameter, misclassifies a structural load-bearing column as a decorative column, or assigns an incorrect property set, the structural model becomes corrupted. On real-world civil engineering projects, this can lead to:
-- **Coordination Clashes**: Misclassified elements are ignored by automated clash-detection software, resulting in physical site collision errors.
-- **Costly Rework**: Building models constructed from incorrect classifications result in false bill of materials (BOM) estimates and incorrect procurement.
-- **Structural Integrity Risks**: Misrepresenting structural constraints (like load-bearing capacity or fire rating) in digital models compromises the safety verification process.
-
-The validation harness checks every AI prediction against schema schemas and logical rules, failing closed if any constraint is violated.
+Key components of the IFC semantic infrastructure include:
+- **Spatial Hierarchies**: e.g., `IfcProject` &rarr; `IfcSite` &rarr; `IfcBuilding` &rarr; `IfcBuildingStorey`.
+- **Physical Entities**: e.g., `IfcColumn`, `IfcWall`, `IfcWindow`, `IfcBeam`.
+- **Property Sets (Psets)**: Alphanumeric attribute sheets attached to entities (e.g., `Pset_WallCommon`, `Pset_WindowCommon`).
+- **Relational Grounding**: Establishing clear object relationships (e.g., connecting a wall and a column via `IfcRelConnectsElements`).
 
 ---
 
-## 6. Why the Public Demo is Sanitized and Reduced
+## 4. Semantic AI
 
-This repository contains a **publicly accessible** version of the research harness. For security, compliance, and IP protection, the dataset is restricted to a 20-record sanitized subset:
-- **IP Protection**: Commercial proprietary training weights, engineering rulesets, and project-specific BIM models are excluded.
-- **Security Boundaries**: No database credentials, access tokens, or live model endpoints are exposed, eliminating attack vectors on public environments.
-- **Verification Focus**: The 20-sample dataset contains representative cases (including walls, slabs, windows, and columns) designed to demonstrate schema conformance, parser logic, and reproduclibility without requiring massive compute resources.
+In this research context, "semantic" goes beyond simple word association or conversational AI. It refers to the systematic alignment of human natural language with standard technical schemas. 
+
+The complete translation pipeline operates as:
+`natural language → engineering meaning → IFC candidate → information requirement → validation → evidence trace`.
+
+Rather than acting as a creative text generator, a semantic parser behaves as a classifier and structurer, mapping unstructured prompts into explicit, typed entities governed by engineering schemas.
+
+---
+
+## 5. Why JSON Contracts
+
+The research harness uses JSON (JavaScript Object Notation) and JSONL (JSON Lines) to structure predictions. This format is selected because it enables:
+- **Machine-readable outputs**: Standardized payloads can be ingested by any BIM authoring plugin or CDE system.
+- **Reproducible validation**: The structured format allows schema checkers to evaluate keys and data types programmatically.
+- **Model comparisons**: Enables researchers to run different LLMs on identical inputs and contrast their schema compliance rates.
+- **Auditing and Replay**: Simplifies tracing historical predictions, letting developers replay inputs and inspect output flags.
+- **Downstream CDE Integration**: Facilitates writing parameters directly back to active databases with high structural security.
+
+---
+
+## 6. Current Public Harness
+
+The public harness hosted in this repository is a reduced demonstration designed to review the core architecture of the research.
+- **Sanitized Dataset**: Uses a limited database of 20 hand-annotated, sanitized records.
+- **No Live Inference**: The web interface does not call live model servers or API keys.
+- **No 3D Generation**: It is designed to validate text metadata classification, not coordinate geometries.
+- **Focus**: Serves as a peer-review tool to audit matching mechanics, JSON contracts, and local verification runs.
+
+---
+
+## 7. Limitations
+
+- **No geometric generation**: The system does not output 3D geometry or model files (no physical IFC files are generated).
+- **No live public model**: There is no live neural network running inference in the public web app.
+- **No SHAP/LIME feature attribution**: Mathematical explanation metrics are not implemented in this public release.
+- **No technical certification**: The system does not certify BIM models for compliance or regulatory review.
+- **No replacement for human review**: All AI predictions are preview-only and must be audited by qualified civil engineers before model insertion.

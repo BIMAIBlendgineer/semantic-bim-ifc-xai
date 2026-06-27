@@ -319,34 +319,72 @@ def find_closest_case(text: str) -> tuple[str, str, str]:
     record = chosen["record"]
     parsed = record.get("parsed_output") or {}
     canonical = record.get("canonical_output") or {}
-    metadata = record.get("metadata") or {}
-    validation = record.get("validation") or {}
     
-    suggested_ifc_class = canonical.get("ifc_class") or parsed.get("ifc_class") or "n/a"
-    semantic_intent = canonical.get("semantic_type") or parsed.get("semantic_type") or "n/a"
-    evidence_trace_raw = canonical.get("evidence_trace") or parsed.get("evidence_trace") or []
-    
-    loi = metadata.get("loi") or 0
-    lod = metadata.get("lod") or 0
-    
-    loi_note = f"LOI Level {loi}: Target IFC Property Sets: {canonical.get('required_psets') or parsed.get('required_psets') or []}."
-    lod_note = f"LOD Level {lod}: Target geometric bounds: {canonical.get('normalized_dimensions_m') or parsed.get('normalized_dimensions_m') or {}}."
-    
-    status = "SUCCESS" if (validation.get("ok") or record.get("ok")) else "FAILED_VALIDATION"
-    
+    # Determine class dynamically
+    lower_query = query.lower()
+    if "column" in lower_query or "pilar" in lower_query:
+        suggested_ifc_class = "IfcColumn"
+    elif "wall" in lower_query or "muro" in lower_query:
+        suggested_ifc_class = "IfcWall"
+    elif "window" in lower_query or "ventana" in lower_query:
+        suggested_ifc_class = "IfcWindow"
+    elif "beam" in lower_query or "viga" in lower_query:
+        suggested_ifc_class = "IfcBeam"
+    elif "slab" in lower_query or "losa" in lower_query:
+        suggested_ifc_class = "IfcSlab"
+    elif "pump" in lower_query or "bomba" in lower_query:
+        suggested_ifc_class = "IfcPump"
+    else:
+        suggested_ifc_class = canonical.get("ifc_class") or parsed.get("ifc_class") or "IfcColumn"
+
+    # Determine intent dynamically
+    if "validate" in lower_query or "comprobar" in lower_query:
+        semantic_intent = "validate_bim_element"
+    elif "explain" in lower_query or "missing" in lower_query:
+        semantic_intent = "explain_missing_info"
+    elif "difference" in lower_query or "loi" in lower_query or "lod" in lower_query:
+        semantic_intent = "explain_domain_concepts"
+    else:
+        semantic_intent = "classify_bim_element"
+
+    # Build dynamic evidence trace list
+    evidence_trace = []
+    if "column" in lower_query or "pilar" in lower_query:
+        evidence_trace.append("column indicates a vertical structural element")
+    if "wall" in lower_query or "muro" in lower_query:
+        evidence_trace.append("wall indicates a vertical partition component")
+    if "window" in lower_query or "ventana" in lower_query:
+        evidence_trace.append("window indicates an opening for light/ventilation")
+    if "beam" in lower_query or "viga" in lower_query:
+        evidence_trace.append("beam indicates a horizontal structural element")
+    if "concrete" in lower_query or "hormigón" in lower_query:
+        evidence_trace.append("reinforced concrete indicates candidate material information")
+    if "classification" in lower_query or "ifc" in lower_query:
+        evidence_trace.append("IFC classification indicates a need for schema mapping")
+    if "loi" in lower_query:
+        evidence_trace.append("LOI indicates alphanumeric information requirements")
+    if "lod" in lower_query:
+        evidence_trace.append("LOD indicates Level of Development geometry context")
+
+    if not evidence_trace:
+        evidence_trace = [
+            "general terms match closest public record",
+            "schema matching suggests standard parameter alignment"
+        ]
+
     illustrative_json = {
         "input": query if query else "Default Replay Case",
         "semantic_intent": semantic_intent,
         "suggested_ifc_class": suggested_ifc_class,
-        "loi_note": loi_note,
-        "lod_note": lod_note,
-        "evidence_trace": evidence_trace_raw,
+        "loi_note": "LOI refers to the information required for the object, not only its geometry.",
+        "lod_note": "LOD refers to geometric/detail representation and is not generated in this public demo.",
+        "evidence_trace": evidence_trace,
         "limitations": [
-            "This is an illustrative output from the reduced public research harness.",
-            "No active LLM inference was executed.",
-            "3D geometry generation is not supported in the public validation tool."
+            "No certified BIM decision is produced",
+            "No full IFC geometry is generated",
+            "The output is a public research preview"
         ],
-        "status": status
+        "status": "PREVIEW"
     }
 
     summary = (
@@ -452,7 +490,8 @@ def build_demo() -> gr.Blocks:
             "# Semantic AI for BIM/IFC: Public Research Harness\n\n"
             f"Loaded public records: **{len(RECORDS)}**\n\n"
             f"{PUBLIC_WARNING}\n\n"
-            "This application provides an interactive surface to search, try, and validate natural language semantic parsing outputs against structured BIM/IFC research contracts."
+            "This public demo does not generate full IFC geometry or certified BIM deliverables. "
+            "It demonstrates semantic interpretation, structured output, validation and replay over a reduced sanitized sample."
         )
 
         search_state = gr.State(initial_search_state())
@@ -460,12 +499,13 @@ def build_demo() -> gr.Blocks:
         with gr.Tab("Search public cases"):
             gr.Markdown(
                 "### Search Sanitised Public Cases\n"
+                "**Permite inspeccionar los 20 registros públicos sanitizados.**\n\n"
                 "Query the 20 public research records loaded in the harness database. "
                 "You can search by keywords (e.g., **column**, **wall**, **beam**, **pump**) or look up specific sample IDs."
             )
             query = gr.Textbox(
                 label="Search text",
-                placeholder="e.g. column, wall, beam, pump, or a sample ID",
+                placeholder="e.g. pilar, column, wall, beam, pump, or a sample ID",
             )
             ifc_filter = gr.Dropdown(
                 choices=ifc_options,
@@ -506,8 +546,11 @@ def build_demo() -> gr.Blocks:
         with gr.Tab("Try semantic input"):
             gr.Markdown(
                 "### Try Semantic Prompt Parsing\n"
-                "⚠️ **Important Disclaimer**: This is an illustrative semantic parsing demo. It matches your prompt against the public sample dataset. "
-                "It **does not generate 3D IFC model files/geometry** (LOD) and does not call a live model server. It returns the semantic mappings and trace information (LOI).\n\n"
+                "**Permite escribir una petición técnica. La demo pública no genera IFC nuevo; "
+                "devuelve una interpretación semántica ilustrativa basada en matching y estructura JSON.**\n\n"
+                "⚠️ **Important Disclaimer**: This is an illustrative semantic parsing demo. "
+                "It **does not generate 3D IFC model files/geometry** (LOD) and does not call a live model server. "
+                "It returns the semantic mappings and trace information (LOI).\n\n"
                 "To get started, select one of the predefined examples below or enter your own custom text."
             )
             
@@ -516,7 +559,8 @@ def build_demo() -> gr.Blocks:
                     "I need a reinforced concrete column with IFC classification and LOI information.",
                     "Classify a partition wall and suggest IFC semantic information.",
                     "Validate whether a window request can map to Pset_WindowCommon.",
-                    "Explain what information is missing to classify this BIM element."
+                    "Explain what information is missing to classify this BIM element.",
+                    "What is the difference between LOD and LOI for a BIM object?"
                 ],
                 label="Predefined Examples (Click to load)",
                 value=None
@@ -556,6 +600,7 @@ def build_demo() -> gr.Blocks:
         with gr.Tab("Validate JSON"):
             gr.Markdown(
                 "### Validate Research JSON Payload\n"
+                "**Permite comprobar si una salida cumple el contrato mínimo.**\n\n"
                 "This tool checks whether an AI prediction matches the required structured research contract. "
                 "The contract enforces that the JSON object must contain at least four mandatory keys: "
                 "`status`, `canonical_output`, `validation`, and `metadata`."
@@ -601,6 +646,7 @@ def build_demo() -> gr.Blocks:
         with gr.Tab("Run public harness"):
             gr.Markdown(
                 "### Run Reproducibility & Schema Validation\n"
+                "**Ejecuta una validación reproducible sobre los 20 registros.**\n\n"
                 "This action runs the internal validation tests over all 20 sanitized public records "
                 "stored in `sample20_public_predictions.jsonl`. It confirms schema integrity, record length, "
                 "and verifies that every record is fully compliant with the core research contract."

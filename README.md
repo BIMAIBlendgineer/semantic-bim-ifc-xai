@@ -1,228 +1,172 @@
 # Semantic AI for BIM/IFC: Public Research Harness
 
-An academic research initiative to bridge natural language intent with structured building information schemas.
+A public research artifact for studying how natural-language engineering requests can be mapped into structured BIM/IFC semantic outputs, validated records, evidence traces and future explainable AI workflows.
 
 > [!IMPORTANT]
-> **Ecosystem Disclaimer**: This repository contains the public research harness and open-source validation artifacts for Semantic AI in BIM. It operates independently from the commercial **XAIBIM** product ecosystem. It is intended strictly for research review, reproducibility, and academic audit, utilizing non-proprietary sanitized datasets.
+> **Ecosystem Disclaimer**: This repository is a public research artifact. It is intentionally separated from commercial XAIBIM ecosystem components. It is not an official product, certification system, university service or institutional endorsement.
 
 ---
 
-## Introduction for Civil and Structural Engineers
+## For Civil Engineers
 
-Civil engineers, structural designers, and construction managers live in a world of high-precision BIM models. While 3D shapes are easily visualized, the true intelligence of a model lies in its metadata: IFC classes, property sets, material assignments, and performance specifications. 
+Un ingeniero civil normalmente piensa en elementos físicos: pilares, vigas, muros, ventanas, losas, materiales, cargas, fases, interferencias y documentación. Un sistema BIM representa parte de esa realidad mediante geometría e información. La IA semántica aquí estudiada no intenta “dibujar bonito”; intenta comprender qué significa una petición técnica y transformarla en una estructura verificable.
 
-Traditionally, adding, modifying, or querying this database requires manual parameter entry or complex visual scripting. **Semantic AI** aims to bridge the gap between human language (e.g., *"I need a load-bearing exterior concrete column with a 2-hour fire rating"*) and the strict database schemas of BIM. This research harness provides the tooling to parse, validate, and trace how natural language prompts map into standard building data representations.
+### Ejemplo de interpretación semántica:
 
----
-
-## What Problem Does This Research Address?
-
-Modern building projects suffer from "information degradation" during design handover. Natural language requests (from clients, regulations, or email instructions) must be translated manually into structural model parameters. This process is:
-1. **Error-prone**: Subtle engineering requirements are lost or misclassified.
-2. **Untraceable**: No audit trail exists showing *why* a particular IFC property or class was chosen.
-3. **Inconsistent**: Different operators assign different attributes to identical elements.
-
-This research establishes a validation harness to ensure that AI-driven parameter generation is structured, auditable, and conformant to standard engineering schemas.
-
----
-
-## Core Domain Concepts
-
-### What is BIM?
-**Building Information Modeling (BIM)** is a digital representation of physical and functional characteristics of a facility. A BIM model is not just a 3D drawing; it is a rich relational database where every door, beam, wall, and bolt is an object containing physical attributes and relationships.
-
-### What is IFC?
-**Industry Foundation Classes (IFC)** is the open, international standard for BIM data exchange (ISO 16739). It defines a rigid hierarchical schema of entities (e.g., `IfcWall`, `IfcColumn`, `IfcSlab`), property sets (e.g., `Pset_WallCommon`), and relationships, enabling interoperability across different software platforms.
-
-### What does "Semantic" mean here?
-In the context of this research, **semantic** refers to the *meaning* and *classification* of elements and parameters. Instead of focusing on 3D coordinates (geometry), semantic processing focuses on intent, classification mapping, compliance parameters (LOI), and ensuring the model matches the engineering requirements.
+* **Input humano**: 
+  * *“I need a reinforced concrete column with IFC classification and LOI information.”*
+* **Interpretación semántica**:
+  * **Elemento probable**: Columna estructural.
+  * **Clase IFC candidata**: `IfcColumn`.
+  * **Material candidato**: Reinforced concrete (hormigón armado).
+  * **LOI (Level of Information)**: Información alfanumérica requerida para el componente.
+  * **LOD (Level of Development)**: Representación geométrica (no generada todavía en la demo pública).
+  * **Salida**: JSON estructurado que actúa como contrato técnico.
+  * **Validación**: Comprobación automatizada de campos mínimos requeridos en el esquema.
+  * **Explicación**: Evidencias y trazas textuales de por qué se realizó la interpretación anterior.
 
 ---
 
-## Concept Comparison: LOD vs. LOI
+## Domain Concepts Explained
 
-Understanding the separation of geometry and data is critical when evaluating semantic inputs:
+### What problem of civil engineering does this research address?
+During design coordination and handover, critical engineering decisions are communicated in natural language (design briefs, review notes, regulatory codes). Converting these requests into parameters inside a BIM database is a manual, error-prone process. This research tests how AI can parse these prompts and ground them in standardized schemas automatically while maintaining a clear audit trail.
 
-| Aspect | LOD (Level of Development / Detail) | LOI (Level of Information) |
-| :--- | :--- | :--- |
-| **Focus** | 3D Geometry, shape, location, and visual detail. | Non-geometric data, performance, and attributes. |
-| **Example** | A detailed 3D model of a steel beam showing bolts. | Material grade (S355), acoustic rating, cost, manufacturer. |
-| **AI Role** | Generates mesh, points, and spatial placements. | Classifies schemas, maps property sets, extracts intents. |
-| **Target Standards** | Level of Detail levels 100 to 500. | IFC property sets, custom project parameter templates. |
+### Why BIM is not just 3D geometry
+Building Information Modeling (BIM) is a relational database. The 3D coordinates (geometry) are only one part of the model. The real power of BIM lies in its database values: structural properties, fire ratings, acoustic data, costing parameters, and maintenance schedules. 
+
+### Why IFC is important
+The Industry Foundation Classes (IFC) schema is the open, vendor-neutral standard (ISO 16739) for BIM data exchange. Without IFC, building models cannot be audited or shared across different engineering softwares without major information loss.
+
+### What does "semantic" mean in BIM/IFC?
+In this research, "semantic" refers to the classification and attributes of an element rather than its physical geometry. It means mapping plain language concepts (e.g., *"exterior structural support"*) to explicit IFC types (`IfcColumn` with `IsExternal = True` and `LoadBearing = True`).
+
+### What does the public demo do today?
+It allows reviewers to:
+1. Search and browse 20 sanitised research cases.
+2. Type custom prompts to find the closest matching semantic result.
+3. Validate custom JSON objects against the core contract schema.
+4. Run validation scripts to prove reproducibility.
+
+### What it does not do yet
+- **No 3D Geometry**: It does not draw or output 3D geometry files.
+- **No Live Inference**: It does not host active large language models. The matching is resolved deterministically against the sanitised database.
 
 ---
 
-## System Workflows and Architectures
+## Conceptual Framework Mappings
 
-### 1. Natural Language Semantic Pipeline
-The following flowchart illustrates the transition from natural language intent to a validated evidence trace:
+### LOI vs. LOD Distinction
+- **LOD (Level of Development / Detail)**: Focuses on the geometric representation of a component (from a simple bounding box to detailed reinforcement bars).
+- **LOI (Level of Information)**: Focuses on the alphanumeric metadata (material classifications, manufacturer data, property sets, and performance characteristics).
+
+### Domain Separation
+Engineering design is composed of multiple layers:
+1. **Geometry**: The physical shape (LOD).
+2. **Information**: Alphanumeric parameters (LOI).
+3. **Semantics**: Meaning and relationships (IFC).
+4. **Validation**: Automated schema checks to avoid structural metadata errors.
+5. **Explanation**: Explaining *why* the AI generated a specific output, laying the foundation for trust.
+
+---
+
+## Core Diagrams
+
+### Diagram 1 — Flujo Semántico
+Shows the progression from a natural-language engineering request to a future explainable AI output:
 
 ```mermaid
-flowchart TD
-    A["Natural Language Input (Civil Prompt)"] --> B["Semantic Parsing (LLM Adapter)"]
-    B --> C["IFC Candidate (Class & Schema Match)"]
-    C --> D["Validation (Rules & Constraints Check)"]
-    D --> E["Evidence Trace (JSON contract, audits, status)"]
+flowchart LR
+    A[Natural-language engineering request] --> B[Semantic parsing]
+    B --> C[Engineering intent]
+    C --> D[IFC candidate]
+    D --> E[LOI / LOD interpretation]
+    E --> F[Structured JSON output]
+    F --> G[Validation]
+    G --> H[Evidence trace]
+    H --> I[Future XAI explanation]
     
-    style A fill:#1e293b,stroke:#475569,stroke-width:2px,color:#fff
-    style B fill:#3b82f6,stroke:#1d4ed8,stroke-width:2px,color:#fff
-    style C fill:#0f766e,stroke:#115e59,stroke-width:2px,color:#fff
-    style D fill:#d97706,stroke:#b45309,stroke-width:2px,color:#fff
-    style E fill:#16a34a,stroke:#15803d,stroke-width:2px,color:#fff
+    style A fill:#1e293b,stroke:#334155,color:#fff
+    style B fill:#3b82f6,stroke:#1d4ed8,color:#fff
+    style F fill:#0f766e,stroke:#115e59,color:#fff
+    style G fill:#d97706,stroke:#b45309,color:#fff
+    style I fill:#16a34a,stroke:#15803d,color:#fff
 ```
 
-### 2. Architecture: Public Demo vs. Future Research System
-This sequence diagram contrasts the static, sandboxed nature of the current public demonstration against a live production systems environment:
+### Diagram 2 — Qué Existe Hoy vs. Futuro
+Contrasts the public validation harness with a fully realized live production and explanation system:
 
 ```mermaid
-sequenceDiagram
-    autonumber
-    actor Engineer as Civil Engineer
-    box rgba(30, 41, 59, 0.5) Public Reduced Demo
-        participant DemoUI as Gradio Web App
-        participant PublicSample as sample20_public_predictions.jsonl
-    end
-    box rgba(15, 23, 42, 0.8) Future Production System
-        participant ActiveLLM as Fine-tuned LLM Server
-        participant ValidationServer as Formal IFC Validator
-        participant BIMServer as CDE / BIM Model Server
+flowchart TB
+    subgraph Today[Public research harness today]
+        A1[20 sanitized records]
+        A2[Search public cases]
+        A3[Try semantic input by matching]
+        A4[Validate JSON contract]
+        A5[Run replay harness]
     end
 
-    Note over Engineer, PublicSample: CURRENT PUBLIC DEMO PATH
-    Engineer->>DemoUI: Submits Query / JSON Input
-    DemoUI->>PublicSample: Scan closest match (TF-IDF/Vector similarity)
-    PublicSample-->>DemoUI: Returns static JSON trace
-    DemoUI-->>Engineer: Displays mock/parsed predictions
+    subgraph Future[Future Semantic AI + XAI system]
+        B1[Live semantic model]
+        B2[IFC/LOI/LOD reasoning]
+        B3[Evidence mapping]
+        B4[Counterfactual explanations]
+        B5[Human engineering review]
+        B6[Optional IFC geometry preview]
+    end
 
-    Note over Engineer, BIMServer: FUTURE PRODUCTION SYSTEM PATH
-    Engineer->>DemoUI: Submits raw prompt
-    DemoUI->>ActiveLLM: Execute live inference
-    ActiveLLM-->>DemoUI: Output structured candidate JSON
-    DemoUI->>ValidationServer: Check IFC Schema alignment (IFC4/IFC4x3)
-    ValidationServer-->>DemoUI: Return validation flags & evidence
-    DemoUI->>BIMServer: Mutate/Write model elements with human approval
-    BIMServer-->>Engineer: Render validated 3D IFC elements
+    Today --> Future
+    
+    style Today fill:#1e293b,stroke:#334155,color:#fff
+    style Future fill:#022c22,stroke:#064e3b,color:#fff
 ```
 
-### 3. Separation of Domain Boundaries
-This diagram outlines the relationships and data flow between physical LOD geometry, informative LOI attributes, standardized IFC schemas, AI outputs, and explainability layers:
+### Diagram 3 — Relación de Conceptos
+Maps the boundary connections between BIM, IFC standards, geometric details, information requirements, validation contracts, and explainability:
 
 ```mermaid
-graph TD
-    subgraph LOD["LOD (Level of Development)"]
-        geom["3D Geometry & Coordinates (e.g. Bounding Box, CAD shape)"]
-    end
-    subgraph LOI["LOI (Level of Information)"]
-        attr["Non-geometric parameters (e.g. fire rating, material strength)"]
-    end
-    subgraph IFC["IFC (Industry Foundation Classes)"]
-        schema["Standard Schema (IfcColumn, IfcWall, Pset_WindowCommon)"]
-    end
-    subgraph SemanticOutput["Semantic AI Output"]
-        parsed["Intent mapping, extracted entities & suggested class"]
-    end
-    subgraph XAI["XAI Explanation"]
-        trace["Evidence traces, uncertainty score, matching justifications"]
-    end
-
-    geom -.-> |Linked via GUID| schema
-    attr --> |Mapped to| schema
-    parsed --> |Proposes| schema
-    parsed --> |Identifies| LOI
-    trace --> |Justifies| parsed
-    trace --> |Audits| LOI
-
-    style LOD fill:#1e1b4b,stroke:#312e81,color:#fff
-    style LOI fill:#064e3b,stroke:#065f46,color:#fff
+flowchart LR
+    BIM[BIM process] --> IFC[IFC standard]
+    BIM --> LOD[LOD: geometric/detail representation]
+    BIM --> LOI[LOI: required information]
+    IFC --> SEM[Semantic AI output]
+    LOD --> SEM
+    LOI --> SEM
+    SEM --> VAL[Validation contract]
+    VAL --> XAI[Future XAI explanation]
+    
+    style BIM fill:#1e1b4b,stroke:#312e81,color:#fff
     style IFC fill:#7c2d12,stroke:#7c2d12,color:#fff
-    style SemanticOutput fill:#0f172a,stroke:#334155,color:#fff
+    style SEM fill:#0f172a,stroke:#334155,color:#fff
     style XAI fill:#022c22,stroke:#064e3b,color:#fff
 ```
 
 ---
 
-## What the Public Demo Does Today
+## Technical Details
 
-The Hugging Face public demonstration serves as a review surface to inspect and replay the static research results:
-- **Search Public Cases**: Scans 20 representative engineering prompts and shows their associated schema mappings and validation logs.
-- **Mock Semantic Input**: Evaluates user prompts against the existing sanitized sample database and retrieves the closest matching semantic result.
-- **Contract Schema Validation**: Validates any arbitrary JSON payload against the core contract schema fields (`status`, `canonical_output`, `validation`, `metadata`).
-- **Sanity Reproducibility Run**: Performs a complete local suite verification of all 20 public records to guarantee evidence integrity.
+### Why JSON is used as a contract technical format
+- **Machine readability**: Enables seamless API integration with CAD and BIM systems.
+- **Reproducible validation**: Assures outputs match standard schemas before database mutation.
+- **Audit and Replay**: Saves snapshots of model state and AI predictions for project history.
 
----
+### What can be tested today in Hugging Face
+Reviewers can access the spaces to verify:
+- Semantic matching logic.
+- JSON contract structures.
+- Local regression and reproducibility runs.
 
-## What It Does Not Do Yet
-
-> [!WARNING]
-> **Scope Limitations**: This is a reduced public research harness. 
-> 
-> - **No 3D Model Generation**: The harness does not generate or output 3D geometry files (e.g., `.ifc` coordinate meshes or `.rvt` project files).
-> - **No Live Model Inference**: The public web app does not host active neural networks or make calls to live LLMs. Matches are resolved deterministically against the static research dataset.
-> - **No Direct Database Mutation**: This repository does not connect to active Common Data Environments (CDE) or mutate model files in place.
+- **Interactive Harness Space**: [semantic-xaibim-harness](https://huggingface.co/spaces/bimaiblend/semantic-xaibim-harness)
+- **Replay Space**: [semantic-xaibim-replay](https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay)
 
 ---
 
-## Explainable AI (XAI) Roadmap
-
-Civil engineering decisions require auditability. Traditional "black-box" AI systems that output classifications without justification are unacceptable on governed projects. We are establishing an evolutionary path toward formal Explainable AI (XAI):
-
-### Roadmap Path
-```mermaid
-flowchart LR
-    Step1["Current Public Demo<br>(Reduced sample replay & validation)"] --> Step2["Semantic Traceability<br>(JSON schema mapping, error tracking)"]
-    Step2 --> Step3["Formal XAI<br>(SHAP/LIME attribution, counterfactual prompts)"]
-    Step3 --> Step4["BIM/IFC Generation<br>(Human-in-the-loop, 3D element mutations)"]
-
-    style Step1 fill:#1e293b,stroke:#334155,color:#fff
-    style Step2 fill:#0f766e,stroke:#115e59,color:#fff
-    style Step3 fill:#d97706,stroke:#b45309,color:#fff
-    style Step4 fill:#16a34a,stroke:#15803d,color:#fff
-```
-
-### Why this evolves into XAI
-By formalizing the outputs into a structured contract containing `evidence_trace`, `limitations`, and validation parameters, researchers can analyze the decision boundary of LLM classifications. Future phases will integrate mathematical feature attribution and counterfactual reasoning to explain exactly why an AI suggested a specific IFC class or property set over alternatives.
-
-For a detailed breakdown of current capabilities versus planned phases, see [docs/xai_roadmap.md](file:///C:/0%20Work/0%20XAIBIM/semantic/docs/xai_roadmap.md).
+## Future Research Scope
+Future iterations of this research will include:
+1. Live model APIs running fine-tuned civil domain LLMs.
+2. Full mathematical XAI (SHAP/LIME) attribution.
+3. Automated 3D IFC element generation and insertion.
 
 ---
 
-## How to Test the Hugging Face Demo
-
-To interact with the validation harness, you can use either of the public spaces:
-1. **Interactive Harness Space**: [bimaiblend/semantic-xaibim-harness](https://huggingface.co/spaces/bimaiblend/semantic-xaibim-harness)
-   - Search cases, try inputs, and validate custom JSON payloads.
-2. **Replay Space**: [bimaiblend/semantic-xaibim-replay](https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay)
-   - View structured trace payloads step-by-step.
-
----
-
-## Public Artifacts
-
-The repository exposes the following open research components:
-- [CITATION.cff](file:///C:/0%20Work/0%20XAIBIM/semantic/CITATION.cff) - Citation metadata.
-- `spaces/huggingface_harness/sample20_public_predictions.jsonl` - 20 sanitized, hand-annotated semantic BIM predictions.
-- `harness/schema_validator.py` - Core Python validator checking schema compliance.
-- `harness/replay_harness.py` - Replay execution engine.
-
----
-
-## Research Limitations
-
-- **Dataset Size**: The public harness is limited to 20 reference cases for verification.
-- **Classification Range**: Focuses on basic structural components (columns, walls, slabs, windows) and does not map complex MEP (Mechanical, Electrical, Plumbing) or infrastructural entities.
-- **Static Grounding**: Evidence validation flags are rule-based and do not verify model semantics against active geometric collision checking.
-
----
-
-## Citation
-
-If you use this research or code in your academic work, please cite it using the following format:
-
-```bibtex
-@software{de_Freitas_Oliveira_Mousinho_Semantic_AI_for_2026,
-  author = {de Freitas Oliveira Mousinho, Dean Delmo},
-  title = {{Semantic AI for BIM/IFC: Public Research Harness}},
-  url = {https://github.com/BIMAIBlendgineer/semantic},
-  year = {2026}
-}
-```
+The long-term goal is not to replace engineers, but to study how AI systems can make BIM/IFC interpretation more explicit, auditable and explainable.
