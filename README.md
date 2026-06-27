@@ -38,6 +38,14 @@ A public replay demo is available on Hugging Face Spaces:
 
 The demo loads the reduced public JSONL sample and displays prompt payloads, canonical outputs, parsed outputs and validation metadata. It does not run model inference.
 
+## Interactive public harness demo
+
+A separate public Hugging Face Space is prepared for interactive harness validation:
+
+- https://huggingface.co/spaces/bimaiblend/semantic-xaibim-harness
+
+The demo allows reviewers to search public cases, try constrained semantic input, validate JSON and run the public harness on the reduced public sample.
+
 ## Public evidence
 
 The initial public evidence package includes:

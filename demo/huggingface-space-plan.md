@@ -18,3 +18,11 @@ Initial implementation can use Gradio with static JSONL examples.
 - Mode: public replay demo
 - Inference: disabled
 
+## Separate Harness Space
+
+- Space: https://huggingface.co/spaces/bimaiblend/semantic-xaibim-harness
+- Direct app: https://bimaiblend-semantic-xaibim-harness.hf.space
+- Status: prepared as a separate public harness demo
+- Mode: search, semantic matching, JSON validation, and public harness replay
+- Inference: disabled
+
