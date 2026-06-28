@@ -57,6 +57,182 @@ def to_json(value: Any) -> str:
     return json.dumps(value, indent=2, ensure_ascii=False, sort_keys=True)
 
 
+def generate_obj_cube(x1: float, x2: float, y1: float, y2: float, z1: float, z2: float, name: str) -> str:
+    temp_dir = ROOT / "temp_models"
+    temp_dir.mkdir(parents=True, exist_ok=True)
+    obj_path = temp_dir / f"{name}.obj"
+    
+    vertices = [
+        (x1, y1, z1),
+        (x2, y1, z1),
+        (x2, y2, z1),
+        (x1, y2, z1),
+        (x1, y1, z2),
+        (x2, y1, z2),
+        (x2, y2, z2),
+        (x1, y2, z2)
+    ]
+    faces = [
+        (1, 2, 3, 4),
+        (6, 5, 8, 7),
+        (1, 5, 6, 2),
+        (4, 3, 7, 8),
+        (1, 4, 8, 5),
+        (2, 6, 7, 3)
+    ]
+    out = []
+    for v in vertices:
+        out.append(f"v {v[0]:.3f} {v[1]:.3f} {v[2]:.3f}")
+    for f in faces:
+        out.append(f"f {f[0]} {f[1]} {f[2]} {f[3]}")
+        
+    obj_path.write_text("\n".join(out), encoding="utf-8")
+    return str(obj_path)
+
+
+def semantic_bim_preview(text: str) -> tuple[str, list[list[str]], str, str, str, str]:
+    query = (text or "").strip()
+    lower_query = query.lower()
+    
+    if any(k in lower_query for k in ("column", "pilar", "columna")):
+        ifc_class = "IfcColumn"
+        bim_element = "reinforced concrete column"
+        loi_fields = [
+            ["IFC Class", "IfcColumn", "Identifies the structural vertical component for load path calculations."],
+            ["Material Baseline", "reinforced concrete", "Determines structural capacity, weight, and self-weight calculation."],
+            ["Structural Role", "Load-bearing", "Crucial for structural analysis models to transfer gravity loads."],
+            ["Fire Rating", "120 minutes", "Required to ensure evacuation time compliance under fire safety codes."]
+        ]
+        obj_path = generate_obj_cube(-0.25, 0.25, 0.0, 3.0, -0.25, 0.25, "column")
+        evidence = [
+            "column indicates a vertical structural element",
+            "reinforced concrete indicates material information",
+            "IFC classification indicates schema mapping",
+            "LOI indicates alphanumeric information requirements"
+        ]
+    elif any(k in lower_query for k in ("wall", "muro", "parede", "partition")):
+        ifc_class = "IfcWall"
+        bim_element = "partition wall"
+        loi_fields = [
+            ["IFC Class", "IfcWall", "Identifies vertical enclosure or partition elements."],
+            ["Material Baseline", "drywall / steel stud", "Affects acoustic insulation, partition weight, and cost estimation."],
+            ["Is External", "false", "Determines thermal boundary conditions and weathering requirements."],
+            ["Fire Rating", "60 minutes", "Safety parameter to check compartmentation compliance."]
+        ]
+        obj_path = generate_obj_cube(-1.5, 1.5, 0.0, 2.5, -0.1, 0.1, "wall")
+        evidence = [
+            "wall/muro/parede/partition indicates a vertical enclosure or dividing element",
+            "drywall/steel stud indicates material specification",
+            "IFC classification indicates wall schema mapping",
+            "LOI indicates fire partition and partition attributes"
+        ]
+    elif any(k in lower_query for k in ("window", "janela", "ventana")):
+        ifc_class = "IfcWindow"
+        bim_element = "exterior glazed window"
+        loi_fields = [
+            ["IFC Class", "IfcWindow", "Identifies openings for daylighting and ventilation."],
+            ["Material Baseline", "double glazing / aluminum frame", "Affects thermal envelope performance and cost."],
+            ["U-Value", "1.4 W/m²K", "Required for energy efficiency and HVAC heat loss simulation."],
+            ["Acoustic Rating", "35 dB", "Assures acoustic comfort against exterior environmental noise."]
+        ]
+        obj_path = generate_obj_cube(-0.6, 0.6, 0.8, 1.8, -0.05, 0.05, "window")
+        evidence = [
+            "window/janela/ventana indicates an opening for light/ventilation",
+            "exterior glazed indicates window role",
+            "IFC classification indicates window schema mapping",
+            "LOI indicates thermal/acoustic requirements"
+        ]
+    elif any(k in lower_query for k in ("beam", "viga")):
+        ifc_class = "IfcBeam"
+        bim_element = "horizontal structural beam"
+        loi_fields = [
+            ["IFC Class", "IfcBeam", "Identifies horizontal bending members."],
+            ["Material Baseline", "structural steel S355", "Determines structural capacity, yield strength, and deflection limits."],
+            ["Span", "4.5 m", "Governs shear, bending moment, and structural sizing checks."],
+            ["Deflection Limit", "L/360", "Required to prevent cracking in plaster/finishes below."]
+        ]
+        obj_path = generate_obj_cube(-2.0, 2.0, 2.4, 2.8, -0.2, 0.2, "beam")
+        evidence = [
+            "beam/viga indicates a horizontal bending/load member",
+            "structural steel indicates material specification",
+            "IFC classification indicates beam schema mapping",
+            "LOI indicates structural capacity parameters"
+        ]
+    elif any(k in lower_query for k in ("slab", "losa", "laje")):
+        ifc_class = "IfcSlab"
+        bim_element = "reinforced concrete slab"
+        loi_fields = [
+            ["IFC Class", "IfcSlab", "Identifies floor plates or structural decks."],
+            ["Thickness", "200 mm", "Determines bending resistance, concrete cover, and sound transmission."],
+            ["Load-bearing", "true", "Defines if the slab transfers live/dead structural loads."],
+            ["Concrete Grade", "C30/37", "Determines compressive strength and durability parameters."]
+        ]
+        obj_path = generate_obj_cube(-2.5, 2.5, -0.2, 0.0, -2.5, 2.5, "slab")
+        evidence = [
+            "slab/losa/laje indicates a flat horizontal floor or deck plate",
+            "reinforced concrete indicates material specification",
+            "IFC classification indicates slab schema mapping",
+            "LOI/thickness indicates bending and acoustic attributes"
+        ]
+    else:
+        ifc_class = "IfcColumn"
+        bim_element = "reinforced concrete column (fallback)"
+        loi_fields = [
+            ["IFC Class", "IfcColumn", "Fallback classification."],
+            ["Status", "Conceptual fallback", "Prompt did not match wall, column, window, beam or slab keywords."],
+            ["Material", "unknown", "Unspecified material, defaulting to reinforced concrete column parameters."]
+        ]
+        obj_path = generate_obj_cube(-0.25, 0.25, 0.0, 3.0, -0.25, 0.25, "column")
+        evidence = [
+            "no class keyword matched, defaulting to vertical column",
+            "IFC classification matches base IfcColumn schema",
+            "LOI has minimal fallback information"
+        ]
+
+    contract_json = {
+        "input": query if query else "I need a reinforced concrete column with IFC classification and LOI information.",
+        "semantic_intent": "classify_bim_element",
+        "suggested_ifc_class": ifc_class,
+        "bim_element": bim_element,
+        "loi": {
+            "meaning": "Level of Information",
+            "required_information": [
+                "element type",
+                "IFC class",
+                "material",
+                "structural role",
+                "classification",
+                "validation status"
+            ]
+        },
+        "lod": {
+            "meaning": "Level of Detail / Development",
+            "status": "Conceptual 3D preview only; no certified geometry generated"
+        },
+        "evidence_trace": evidence,
+        "limitations": [
+            "No certified BIM decision",
+            "No full IFC file generated in this public preview",
+            "No professional validation",
+            "Research demo only"
+        ],
+        "status": "PREVIEW"
+    }
+
+    json_str = to_json(contract_json)
+    
+    lod_note = "LOD Status: Conceptual 3D preview only; no certified geometry generated."
+    evidence_str = "\n".join([f"- {ev}" for ev in evidence])
+    limitations_str = "\n".join([
+        "- No certified BIM decision",
+        "- No full IFC file generated in this public preview",
+        "- No professional validation",
+        "- Research demo only"
+    ])
+    
+    return json_str, loi_fields, lod_note, evidence_str, limitations_str, obj_path
+
+
 def ui_update(**kwargs: Any) -> Any:
     if gr is None:
         return kwargs
@@ -446,6 +622,12 @@ def self_test() -> None:
     assert SAMPLE_PATH.exists(), "sample file missing"
     assert len(RECORDS) == 20, f"expected 20 records, found {len(RECORDS)}"
 
+    # Verify semantic preview logic
+    json_str, loi, lod, evidence, lims, path = semantic_bim_preview("I need a concrete column")
+    assert "IfcColumn" in json_str, json_str
+    assert "reinforced concrete column" in json_str, json_str
+    assert Path(path).exists(), f"OBJ model not generated at {path}"
+
     items = build_table_items("column", "All")
     assert items, "search should return at least one item"
 
@@ -496,12 +678,76 @@ def build_demo() -> gr.Blocks:
 
         search_state = gr.State(initial_search_state())
 
+        with gr.Tab("Start here — Natural language to BIM/IFC semantic preview"):
+            gr.Markdown(
+                "### Start here — Natural language to BIM/IFC semantic preview\n"
+                "- **What this does**: Translates your plain text construction requests into structured BIM/IFC metadata and generates an illustrative 3D shape.\n"
+                "- **What to try**: Type a request like *'I need a reinforced concrete column'* or click one of the examples below.\n"
+                "- **What result means**: The JSON represents the auditable metadata contract (LOI), and the 3D canvas displays a conceptual geometry preview (LOD)."
+            )
+            with gr.Row():
+                with gr.Column(scale=1):
+                    semantic_input_first = gr.Textbox(
+                        label="Enter natural language construction request",
+                        lines=5,
+                        value="I need a reinforced concrete column with IFC classification and LOI information.",
+                        placeholder="e.g. column, wall, window, beam, slab request..."
+                    )
+                    generate_button = gr.Button("Generate semantic BIM preview", variant="primary")
+                    
+                    gr.Examples(
+                        examples=[
+                            "I need a reinforced concrete column with IFC classification and LOI information.",
+                            "Classify a partition wall and suggest IFC semantic information.",
+                            "Validate whether a window request can map to Pset_WindowCommon.",
+                            "Explain what information is missing to classify this BIM element.",
+                            "What is the difference between LOD and LOI for a BIM object?"
+                        ],
+                        inputs=semantic_input_first
+                    )
+                
+                with gr.Column(scale=1):
+                    preview_3d = gr.Model3D(
+                        label="3D Element Preview (LOD)",
+                        clear_color=[0.9, 0.9, 0.9, 1.0]
+                    )
+                    lod_note = gr.Textbox(label="LOD Note", interactive=False)
+                    
+            with gr.Row():
+                with gr.Column(scale=1):
+                    loi_table = gr.Dataframe(
+                        headers=["Information field", "Example value", "Why it matters"],
+                        datatype=["str", "str", "str"],
+                        label="Level of Information (LOI) Attributes",
+                        interactive=False,
+                        wrap=True
+                    )
+                with gr.Column(scale=1):
+                    evidence_trace_box = gr.Textbox(label="Evidence Trace", lines=4, interactive=False)
+                    limitations_box = gr.Textbox(label="Limitations & Warnings", lines=4, interactive=False)
+
+            with gr.Row():
+                json_output = gr.Code(label="Contract JSON Output", language="json")
+
+            generate_button.click(
+                fn=semantic_bim_preview,
+                inputs=semantic_input_first,
+                outputs=[json_output, loi_table, lod_note, evidence_trace_box, limitations_box, preview_3d]
+            )
+            
+            # Run preview once on startup to populate default state
+            demo.load(
+                fn=semantic_bim_preview,
+                inputs=semantic_input_first,
+                outputs=[json_output, loi_table, lod_note, evidence_trace_box, limitations_box, preview_3d]
+            )
+
         with gr.Tab("Search public cases"):
             gr.Markdown(
                 "### Search Sanitised Public Cases\n"
-                "**Permite inspeccionar los 20 registros públicos sanitizados.**\n\n"
-                "Query the 20 public research records loaded in the harness database. "
-                "You can search by keywords (e.g., **column**, **wall**, **beam**, **pump**) or look up specific sample IDs."
+                "- **What this does**: Permite inspeccionar los 20 registros públicos sanitizados.\n"
+                "- **What to try**: Search keywords like 'column' or 'wall', select a filter in the dropdown, and select a record from the list to view.\n"
+                "- **What result means**: The table shows the parsed properties of matches, and selecting one loads its original full JSON record."
             )
             query = gr.Textbox(
                 label="Search text",
@@ -546,12 +792,9 @@ def build_demo() -> gr.Blocks:
         with gr.Tab("Try semantic input"):
             gr.Markdown(
                 "### Try Semantic Prompt Parsing\n"
-                "**Permite escribir una petición técnica. La demo pública no genera IFC nuevo; "
-                "devuelve una interpretación semántica ilustrativa basada en matching y estructura JSON.**\n\n"
-                "⚠️ **Important Disclaimer**: This is an illustrative semantic parsing demo. "
-                "It **does not generate 3D IFC model files/geometry** (LOD) and does not call a live model server. "
-                "It returns the semantic mappings and trace information (LOI).\n\n"
-                "To get started, select one of the predefined examples below or enter your own custom text."
+                "- **What this does**: Permite escribir una petición técnica. La demo pública no genera IFC nuevo; devuelve una interpretación semántica ilustrativa basada en matching y estructura JSON.\n"
+                "- **What to try**: Enter a query or select an example to see what metadata would be mapped in this harness.\n"
+                "- **What result means**: Shows the closest matching record in JSON format for review."
             )
             
             examples_dropdown = gr.Dropdown(
@@ -600,10 +843,9 @@ def build_demo() -> gr.Blocks:
         with gr.Tab("Validate JSON"):
             gr.Markdown(
                 "### Validate Research JSON Payload\n"
-                "**Permite comprobar si una salida cumple el contrato mínimo.**\n\n"
-                "This tool checks whether an AI prediction matches the required structured research contract. "
-                "The contract enforces that the JSON object must contain at least four mandatory keys: "
-                "`status`, `canonical_output`, `validation`, and `metadata`."
+                "- **What this does**: Permite comprobar si una salida cumple el contrato mínimo.\n"
+                "- **What to try**: Edit the pre-populated JSON payload and click 'Validate' to check for compliance.\n"
+                "- **What result means**: Returns PASS if all required keys (`status`, `canonical_output`, `validation`, `metadata`) are present, otherwise lists errors."
             )
             
             minimal_valid_json = to_json({
@@ -646,10 +888,9 @@ def build_demo() -> gr.Blocks:
         with gr.Tab("Run public harness"):
             gr.Markdown(
                 "### Run Reproducibility & Schema Validation\n"
-                "**Ejecuta una validación reproducible sobre los 20 registros.**\n\n"
-                "This action runs the internal validation tests over all 20 sanitized public records "
-                "stored in `sample20_public_predictions.jsonl`. It confirms schema integrity, record length, "
-                "and verifies that every record is fully compliant with the core research contract."
+                "- **What this does**: Ejecuta una validación reproducible sobre los 20 registros.\n"
+                "- **What to try**: Click the 'Run validation' button to verify all records.\n"
+                "- **What result means**: Outputs `SCHEMA_VALIDATION_OK` and `REPLAY_OK` for exactly 20 records if the dataset is intact."
             )
             harness_button = gr.Button("Run validation")
             harness_result = gr.Textbox(label="Harness result", interactive=False)
