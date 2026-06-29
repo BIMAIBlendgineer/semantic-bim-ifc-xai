@@ -20,7 +20,7 @@ Un ingeniero civil normalmente piensa en elementos físicos: pilares, vigas, mur
   * **Clase IFC candidata**: `IfcColumn`.
   * **Material candidato**: Reinforced concrete (hormigón armado).
   * **LOI (Level of Information)**: Información alfanumérica requerida para el componente.
-  * **LOD (Level of Development)**: Representación geométrica (LOD: conceptual preview only; no certified IFC geometry is generated).
+  * **LOD (Level of Development)**: Representación geométrica conceptual. The public demo provides conceptual LOD previews only; no certified IFC geometry is generated.
   * **Salida**: JSON estructurado que actúa como contrato técnico.
   * **Validación**: Comprobación automatizada de campos mínimos requeridos en el esquema.
   * **Explicación**: Evidencias y trazas textuales de por qué se realizó la interpretación anterior.
