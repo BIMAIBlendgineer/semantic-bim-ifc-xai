@@ -35,7 +35,7 @@ This Space is a public research validation harness loaded with 20 sanitized, han
 > The demo provides conceptual OBJ-based 3D previews for illustration, but it does not generate certified IFC geometry or full BIM authoring deliverables.
 
 ### 2. Search public cases
-- **What this does**: Permite inspeccionar los 20 registros públicos sanitizados.
+- **What this does**: Browse and inspect the 20 sanitized public records.
 - **What to try**: Search keywords like 'column' or 'wall', select a filter in the dropdown, and select a record from the list to view.
 - **What result means**: The table shows the parsed properties of matches, and selecting one loads its original full JSON record. If no results are found, suggestions are: `column, wall, beam, slab, window, IfcColumn, Pset_WindowCommon, PREVIEW`.
 
@@ -45,12 +45,12 @@ This Space is a public research validation harness loaded with 20 sanitized, han
 - **What result means**: Shows the closest matching record in JSON format for review.
 
 ### 4. Validate JSON
-- **What this does**: Permite comprobar si una salida cumple el contrato mínimo.
+- **What this does**: Checks whether a JSON output meets the minimum research contract schema.
 - **What to try**: Edit the pre-populated JSON payload and click 'Validate' to check for compliance.
 - **What result means**: This validates the minimum research contract, not a BIM certification.
 
 ### 5. Run public harness
-- **What this does**: Ejecuta una validación reproducible sobre los 20 registros.
+- **What this does**: Runs a reproducible validation across all 20 public records.
 - **What to try**: Click the 'Run validation' button to verify all records.
 - **What result means**: Outputs `SCHEMA_VALIDATION_OK` and `REPLAY_OK` for exactly 20 records if the dataset is intact.
 

@@ -1,12 +1,12 @@
 cff-version: 1.2.0
-title: "Semantic AI for BIM/IFC: Public Research Harness"
+title: "Semantic BIM/IFC XAI Research Harness"
 message: "If you use Semantic AI for BIM/IFC in academic work, please cite this repository."
 type: software
 authors:
   - family-names: "de Freitas Oliveira Mousinho"
     given-names: "Dean Delmo"
-repository-code: "https://github.com/BIMAIBlendgineer/semantic"
-abstract: "Open research toolkit for Semantic BIM/IFC, prompt-to-structure tasks, explainable AI outputs and reproducible benchmark evidence."
+repository-code: "https://github.com/BIMAIBlendgineer/semantic-bim-ifc-xai"
+abstract: "Public academic research artifact for studying how natural-language civil engineering requests can be mapped to structured BIM/IFC semantic records, validation gates, evidence traces, and future explainable AI evaluation workflows."
 keywords:
   - BIM
   - IFC

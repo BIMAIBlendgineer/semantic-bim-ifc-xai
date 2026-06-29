@@ -1,4 +1,4 @@
-# CPCA A1 Metrics Table
+# Benchmark Metrics — Sample20 Smoke Run
 
 ## Sample: smoke20 (n=20)
 

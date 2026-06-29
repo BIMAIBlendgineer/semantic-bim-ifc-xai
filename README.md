@@ -1,91 +1,82 @@
-# Semantic AI for BIM/IFC: Public Research Harness
+# Semantic BIM/IFC XAI Research Harness
 
-A public research artifact for studying how natural-language engineering requests can be mapped into structured BIM/IFC semantic outputs, validated records, evidence traces and future explainable AI workflows.
+A public academic research artifact for studying how natural-language civil engineering requests can be mapped to structured BIM/IFC semantic records, validation gates, evidence traces, and future explainable AI evaluation workflows.
 
 > [!IMPORTANT]
-> **Ecosystem Disclaimer**: This repository is a public research artifact. It is intentionally separated from commercial XAIBIM ecosystem components. It is not an official product, certification system, university service or institutional endorsement.
+> **Research Disclaimer**: This repository is a public academic artifact. It is intentionally separated from any commercial ecosystem components. It is not a product, certification system, university service, or institutional endorsement. Claims about XAI completeness are methodological and forward-looking, not certified deliverables.
 
 ---
 
-## For Civil Engineers
+## 1. Purpose
 
-Un ingeniero civil normalmente piensa en elementos físicos: pilares, vigas, muros, ventanas, losas, materiales, cargas, fases, interferencias y documentación. Un sistema BIM representa parte de esa realidad mediante geometría e información. La IA semántica aquí estudiada no intenta “dibujar bonito”; intenta comprender qué significa una petición técnica y transformarla en una estructura verificable.
+This repository supports open research into the automated semantic interpretation of Building Information Modeling (BIM) data using the Industry Foundation Classes (IFC) schema. The central research question is:
 
-### Ejemplo de interpretación semántica:
+> **How can AI models interpret civil engineering requests expressed in natural language, map them to IFC-compliant structured records, and justify those mappings with auditable, traceable evidence?**
 
-* **Input humano**: 
-  * *“I need a reinforced concrete column with IFC classification and LOI information.”*
-* **Interpretación semántica**:
-  * **Elemento probable**: Columna estructural.
-  * **Clase IFC candidata**: `IfcColumn`.
-  * **Material candidato**: Reinforced concrete (hormigón armado).
-  * **LOI (Level of Information)**: Información alfanumérica requerida para el componente.
-  * **LOD (Level of Development)**: Representación geométrica conceptual. The public demo provides conceptual LOD previews only; no certified IFC geometry is generated.
-  * **Salida**: JSON estructurado que actúa como contrato técnico.
-  * **Validación**: Comprobación automatizada de campos mínimos requeridos en el esquema.
-  * **Explicación**: Evidencias y trazas textuales de por qué se realizó la interpretación anterior.
+The repository provides a sanitized dataset sample, a replay validation harness, an interactive public harness, and the academic methodology documents that govern the research boundary.
 
 ---
 
-## Domain Concepts Explained
+## 2. Research Scope
 
-### What problem of civil engineering does this research address?
-During design coordination and handover, critical engineering decisions are communicated in natural language (design briefs, review notes, regulatory codes). Converting these requests into parameters inside a BIM database is a manual, error-prone process. This research tests how AI can parse these prompts and ground them in standardized schemas automatically while maintaining a clear audit trail.
+This research operates at the intersection of:
 
-### Why BIM is not just 3D geometry
-Building Information Modeling (BIM) is a relational database. The 3D coordinates (geometry) are only one part of the model. The real power of BIM lies in its database values: structural properties, fire ratings, acoustic data, costing parameters, and maintenance schedules. 
-
-### Why IFC is important
-The Industry Foundation Classes (IFC) schema is the open, vendor-neutral standard (ISO 16739) for BIM data exchange. Without IFC, building models cannot be audited or shared across different engineering softwares without major information loss.
-
-### What does "semantic" mean in BIM/IFC?
-In this research, "semantic" refers to the classification and attributes of an element rather than its physical geometry. It means mapping plain language concepts (e.g., *"exterior structural support"*) to explicit IFC types (`IfcColumn` with `IsExternal = True` and `LoadBearing = True`).
-
-### What does the public demo do today?
-It allows reviewers to:
-1. Search and browse 20 sanitised research cases.
-2. Type custom prompts to find the closest matching semantic result.
-3. Validate custom JSON objects against the core contract schema.
-4. Run validation scripts to prove reproducibility.
-
-### What it does not do yet
-- **Conceptual 3D preview only**: the demo provides OBJ-based conceptual previews for illustration, but it does not generate certified IFC geometry or full BIM authoring deliverables.
-- **No Live Inference**: It does not host active large language models. The matching is resolved deterministically against the sanitised database.
+- **BIM/IFC Semantic Interpretation**: Mapping unstructured natural language engineering requests to standardized IFC entity classes, property sets, and information requirements.
+- **Structured Output Contracts**: Producing JSON/JSONL records that enforce schema compliance, provenance, and evidence tracing.
+- **Validation Gates**: Multi-stage automated checks to ensure each record is schema-valid, evidence-supported, and free of unsupported claims.
+- **Explainable AI (XAI) as a Research Constraint**: Treating explanation as an upstream dataset requirement rather than a post-hoc visualization layer.
+- **LoRA/QLoRA Adaptation Roadmap**: Planning lightweight model fine-tuning after dataset validity and baseline benchmarks are established.
 
 ---
 
-## Conceptual Framework Mappings
+## 3. What This Repository Provides
 
-### LOI vs. LOD Distinction
-- **LOD (Level of Development / Detail)**: Focuses on the geometric representation of a component (from a simple bounding box to detailed reinforcement bars).
-- **LOI (Level of Information)**: Focuses on the alphanumeric metadata (material classifications, manufacturer data, property sets, and performance characteristics).
-
-### Domain Separation
-Engineering design is composed of multiple layers:
-1. **Geometry**: The physical shape (LOD).
-2. **Information**: Alphanumeric parameters (LOI).
-3. **Semantics**: Meaning and relationships (IFC).
-4. **Validation**: Automated schema checks to avoid structural metadata errors.
-5. **Explanation**: Explaining *why* the AI generated a specific output, laying the foundation for trust.
+| Artifact | Description |
+|---|---|
+| `sample20/` | 20 sanitized, synthetic BIM/IFC semantic records for reproducible evaluation |
+| `harness/` | Python replay harness for deterministic validation of sample records |
+| `spaces/huggingface_harness/` | Interactive Hugging Face Space harness code |
+| `benchmark/` | Benchmark protocol definitions (intent accuracy, slot F1, IFC class, JSON validity) |
+| `docs/methodology/` | Academic methodology documents (dataset construction, validation gates, XAI position) |
+| `docs/literature/` | IEEE bibliography of relevant state-of-the-art publications |
+| `docs/public_boundary.md` | Explicit public/private research boundary definition |
 
 ---
 
-## Core Diagrams
+## 4. What This Repository Does Not Claim
 
-### Diagram 1 — Flujo Semántico
-Shows the progression from a natural-language engineering request to a future explainable AI output:
+- It does **not** generate certified IFC geometry or produce professional BIM authoring deliverables.
+- It does **not** host active large language models. All current matching is deterministic against the sanitized sample dataset.
+- It does **not** provide a formally complete XAI system. XAI is treated as a methodological requirement and evaluation criterion; full attribution (e.g., SHAP/LIME over live model outputs) is a future research phase.
+- It does **not** contain private training data, proprietary model weights, or adapter checkpoints.
+- It does **not** represent an institutional endorsement from any university, research centre, or funding body.
+
+---
+
+## 5. Semantic BIM/IFC Record Concept
+
+In this research, a **semantic record** is a structured, schema-validated document that encodes:
+
+- **Engineering Intent**: The precise technical objective expressed in the natural language request (e.g., `classify_bim_element`, `extract_properties`).
+- **IFC Class Candidate**: The target entity within the buildingSMART IFC schema hierarchy (e.g., `IfcColumn`, `IfcWall`, `IfcSlab`).
+- **Level of Information (LOI)**: The alphanumeric metadata fields required for the element (material, fire rating, load-bearing status, etc.).
+- **Level of Development (LOD)**: Conceptual geometric metadata for illustration only; no certified geometry is generated.
+- **Evidence Trace**: The explicit justification linking the classification to properties or entities in the input context.
+- **Validation State**: Audit metadata including schema compliance, sanitization status, and split assignment.
+
+### Semantic Flow Diagram
 
 ```mermaid
 flowchart LR
     A[Natural-language engineering request] --> B[Semantic parsing]
     B --> C[Engineering intent]
-    C --> D[IFC candidate]
+    C --> D[IFC candidate class]
     D --> E[LOI / LOD interpretation]
-    E --> F[Structured JSON output]
-    F --> G[Validation]
+    E --> F[Structured JSON record]
+    F --> G[Validation gates]
     G --> H[Evidence trace]
-    H --> I[Future XAI explanation]
-    
+    H --> I[Future XAI evaluation]
+
     style A fill:#1e293b,stroke:#334155,color:#fff
     style B fill:#3b82f6,stroke:#1d4ed8,color:#fff
     style F fill:#0f766e,stroke:#115e59,color:#fff
@@ -93,86 +84,166 @@ flowchart LR
     style I fill:#16a34a,stroke:#15803d,color:#fff
 ```
 
-### Diagram 2 — Qué Existe Hoy vs. Futuro
-Contrasts the public validation harness with a fully realized live production and explanation system:
+### Example Record (Simplified)
 
-```mermaid
-flowchart TB
-    subgraph Today[Public research harness today]
-        A1[20 sanitized records]
-        A2[Search public cases]
-        A3[Find similar public sample]
-        A4[Validate JSON contract]
-        A5[Run replay harness]
-    end
+- **Natural language request**: *"I need a reinforced concrete column with IFC classification and LOI information."*
+- **Engineering intent**: `classify_bim_element`
+- **IFC class candidate**: `IfcColumn`
+- **Material candidate**: Reinforced concrete
+- **LOI fields**: `LoadBearing`, `Material`, `FireRating`, `CrossSectionArea`
+- **LOD**: Conceptual bounding box preview only
+- **Structured output**: JSON contract with all above fields and evidence
+- **Validation**: Automated schema check against required minimum fields
+- **Evidence**: Textual trace identifying which input terms triggered the classification
 
-    subgraph Future[Future Semantic AI + XAI system]
-        B1[Live semantic model]
-        B2[IFC/LOI/LOD reasoning]
-        B3[Evidence mapping]
-        B4[Counterfactual explanations]
-        B5[Human engineering review]
-        B6[Optional IFC geometry preview]
-    end
+---
 
-    Today --> Future
-    
-    style Today fill:#1e293b,stroke:#334155,color:#fff
-    style Future fill:#022c22,stroke:#064e3b,color:#fff
+## 6. Dataset Construction Methodology
+
+The dataset was constructed through a multi-phase pipeline rejecting plain instruction-output pairs in favour of structured, schema-validated contracts. Key methodological decisions include:
+
+- **Rejection of plain text training**: Standard LLM fine-tuning on raw instruction-output pairs was rejected due to lack of schema enforcement, hallucination of catalogue entries, and absence of auditable grounding.
+- **Runtime payload design**: Each record is built around a structured payload encapsulating the input prompt, the active schema, and the target catalogues.
+- **Internal milestones (S18 / S19 / S20)**: Successive pipeline iterations improving validation rigor, catalogue mapping, and blocked-by-prerequisite gate enforcement.
+- **Fail-closed gate**: Any dataset candidate lacking clear provenance, anonymization, or manual review decision is blocked from ingestion.
+
+For the full academic history of dataset construction phases, see [docs/methodology/dataset_construction_and_training_readiness.md](docs/methodology/dataset_construction_and_training_readiness.md).
+
+---
+
+## 7. Public Sanitized Sample
+
+The `sample20` dataset contains 20 representative, fully sanitized records:
+
+- No real-world building models, proprietary databases, or private corporate identifiers.
+- All project-specific GlobalIds replaced with synthetic alternatives.
+- All records pass the full validation gate matrix before publication.
+- Intended for reproducibility, peer review, and benchmark protocol demonstration.
+
+Private datasets (`pilot1000`, `internal_family_dataset_5k`) remain within the private research cluster and are not published here.
+
+---
+
+## 8. Replay and Guided Harness
+
+### Replay Harness
+
+The replay harness (`harness/`) provides deterministic validation:
+
+```bash
+python harness/replay.py --sample sample20/
 ```
 
-### Diagram 3 — Relación de Conceptos
-Maps the boundary connections between BIM, IFC standards, geometric details, information requirements, validation contracts, and explainability:
+This checks that each record in `sample20` produces a consistent, schema-valid output when the canonical pipeline is replayed.
 
-```mermaid
-flowchart LR
-    BIM[BIM process] --> IFC[IFC standard]
-    BIM --> LOD[LOD: geometric/detail representation]
-    BIM --> LOI[LOI: required information]
-    IFC --> SEM[Semantic AI output]
-    LOD --> SEM
-    LOI --> SEM
-    SEM --> VAL[Validation contract]
-    VAL --> XAI[Future XAI explanation]
-    
-    style BIM fill:#1e1b4b,stroke:#312e81,color:#fff
-    style IFC fill:#7c2d12,stroke:#7c2d12,color:#fff
-    style SEM fill:#0f172a,stroke:#334155,color:#fff
-    style XAI fill:#022c22,stroke:#064e3b,color:#fff
+### Interactive Hugging Face Spaces
+
+| Space | Purpose |
+|---|---|
+| [semantic-xaibim-replay](https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay) | Browse and replay the 20 sanitized records |
+| [semantic-xaibim-harness](https://huggingface.co/spaces/bimaiblend/semantic-xaibim-harness) | Interactive semantic matching, JSON validation, and evidence preview |
+
+---
+
+## 9. Validation Gates
+
+Records are accepted into the dataset only after passing an 11-stage validation matrix:
+
+1. JSON syntax parse
+2. Schema validation (Pydantic contract)
+3. IFC class candidate validation (buildingSMART registry)
+4. LOI/LOD consistency check
+5. Evidence trace completeness
+6. Hallucination / unsupported claim scan
+7. Replay validation (deterministic re-execution)
+8. Leakage and deduplication check
+9. Sanitization scan (NER and regex)
+10. Forbidden patterns scan (credentials, paths, private model tags)
+11. Public/private boundary verification
+
+See [docs/methodology/validation_gates.md](docs/methodology/validation_gates.md) for full specification.
+
+---
+
+## 10. XAI Position
+
+Explainable AI (XAI) is treated as an **upstream dataset and evaluation requirement**, not a post-hoc visualization layer:
+
+- **Upstream**: Dataset records must contain explicit evidence traces. A model cannot be rewarded for generating a correct IFC class without justifying *why* that class was selected.
+- **Parallel**: Validation gates inspect explanation quality and truthfulness alongside structural accuracy of JSON output.
+- **Downstream (benchmark)**: The evaluation protocol penalizes models that produce correct classifications without valid, context-supported rationales.
+
+> [!NOTE]
+> Full mathematical XAI attribution (e.g., SHAP, LIME over live model outputs) is a future research phase. The current public harness demonstrates the evidence-trace contract and validation logic, not a completed formal XAI system.
+
+See [docs/methodology/xai_evaluation_position.md](docs/methodology/xai_evaluation_position.md) for the full methodological statement.
+
+---
+
+## 11. LoRA/QLoRA and Quantization Roadmap
+
+Model adaptation and compression are explicitly separated from dataset design:
+
+- **LoRA/QLoRA**: Lightweight fine-tuning will be studied after dataset schema validity is confirmed and benchmark baselines are established. No adapter checkpoints are published in this repository.
+- **QAT / Post-Training Quantization**: A future research phase to study whether compressed models preserve semantic accuracy and explanation quality. Quantization is a resource-efficiency study, not the source of the explanation mechanism.
+
+---
+
+## 12. Public/Private Boundary
+
+This repository represents a strictly sanitized public surface:
+
+| Publicly available | Privately maintained |
+|---|---|
+| `sample20` (20 synthetic records) | `pilot1000` (1,000-case private pilot) |
+| Replay and harness code | Production inference infrastructure |
+| Benchmark protocol definition | Fine-tuned adapter weights |
+| IEEE bibliography | Internal family dataset |
+| Methodology documents | Commercial tenant data |
+
+See [docs/public_boundary.md](docs/public_boundary.md) for the full boundary definition.
+
+---
+
+## 13. Repository Structure
+
+```
+semantic-bim-ifc-xai/
+├── README.md                          # This document
+├── CITATION.cff                       # Academic citation metadata
+├── CONTRIBUTING.md                    # Contribution guidelines
+├── LICENSE                            # Repository license
+├── PUBLIC_EVIDENCE.md                 # Public evidence summary
+├── sample20/                          # 20 sanitized semantic records (JSONL)
+├── harness/                           # Replay validation harness
+├── benchmark/                         # Benchmark protocol definitions
+├── spaces/
+│   └── huggingface_harness/           # Hugging Face Space application code
+├── demo/                              # Standalone demo utilities
+├── examples/                          # Usage examples
+├── research/                          # Supporting research materials
+└── docs/
+    ├── methodology/
+    │   ├── dataset_construction_and_training_readiness.md
+    │   ├── validation_gates.md
+    │   └── xai_evaluation_position.md
+    ├── literature/
+    │   └── semantic_bim_ifc_bibliography_ieee.md
+    └── public_boundary.md
 ```
 
-## CPCA A1 methodology note
+---
 
-This repository includes a CPCA A1 methodological note describing how the public semantic BIM/IFC sample, validation harness, benchmark plan, LoRA/QLoRA adaptation strategy, quantization/QAT discussion and XAI methodology connect as a scientific workflow.
+## 14. Citation
 
-Read it here: [docs/cpca_a1_methodology_note.md](docs/cpca_a1_methodology_note.md)
+If you use this repository in academic work, please cite it using the metadata in [CITATION.cff](CITATION.cff).
 
 ---
 
-## Technical Details
+## 15. License
 
-### Why JSON is used as a contract technical format
-- **Machine readability**: Enables seamless API integration with CAD and BIM systems.
-- **Reproducible validation**: Assures outputs match standard schemas before database mutation.
-- **Audit and Replay**: Saves snapshots of model state and AI predictions for project history.
-
-### What can be tested today in Hugging Face
-Reviewers can access the spaces to verify:
-- Semantic matching logic.
-- JSON contract structures.
-- Local regression and reproducibility runs.
-
-- **Interactive Harness Space**: [semantic-xaibim-harness](https://huggingface.co/spaces/bimaiblend/semantic-xaibim-harness)
-- **Replay Space**: [semantic-xaibim-replay](https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay)
+See [LICENSE](LICENSE) for terms. This repository contains no proprietary data, no production model weights, and no private client information.
 
 ---
 
-## Future Research Scope
-Future iterations of this research will include:
-1. Live model APIs running fine-tuned civil domain LLMs.
-2. Full mathematical XAI (SHAP/LIME) attribution.
-3. Automated 3D IFC element generation and insertion.
-
----
-
-The long-term goal is not to replace engineers, but to study how AI systems can make BIM/IFC interpretation more explicit, auditable and explainable.
+The long-term research goal is not to replace engineers, but to study how AI systems can make BIM/IFC interpretation more explicit, auditable, and explainable.

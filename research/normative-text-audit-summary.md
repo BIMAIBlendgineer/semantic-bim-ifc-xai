@@ -1,4 +1,4 @@
-# CPCA A1 Normative Text Audit Summary
+# Normative Text Audit Summary
 
 ## Result: ﻿NORMATIVE_TEXT_AUDIT_PASS
 
