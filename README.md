@@ -141,6 +141,12 @@ flowchart LR
     style XAI fill:#022c22,stroke:#064e3b,color:#fff
 ```
 
+## CPCA A1 methodology note
+
+This repository includes a CPCA A1 methodological note describing how the public semantic BIM/IFC sample, validation harness, benchmark plan, LoRA/QLoRA adaptation strategy, quantization/QAT discussion and XAI methodology connect as a scientific workflow.
+
+Read it here: [docs/cpca_a1_methodology_note.md](file:///C:/0%20Work/0%20XAIBIM/semantic/docs/cpca_a1_methodology_note.md)
+
 ---
 
 ## Technical Details
