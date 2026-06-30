@@ -1,9 +1,13 @@
 # Semantic BIM/IFC XAI — IEEE Bibliography
 
-State-of-the-art references supporting the research methodology of this repository. All references are in IEEE citation format. DOIs are verified against published records.
+State-of-the-art references supporting the research methodology of this
+repository. All references are in IEEE citation format. DOIs are listed as
+provided by the source bibliography and should be verified before formal
+publication.
 
 > [!NOTE]
-> References [1] and [2] from the internal admin bibliography are administrative grant-call documents and are excluded from this public derivation.
+> Administrative funding-call references from the source bibliography were
+> excluded from this public research bibliography.
 
 ---
 

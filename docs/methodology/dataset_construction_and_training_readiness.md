@@ -2,29 +2,54 @@
 
 ## 1. Scientific Motivation
 
-The semantic interpretation of Building Information Modeling (BIM) data in the context of the Industry Foundation Classes (IFC) schema is not a generic prompt-response task. Standard natural language processing systems often treat text inputs and structured outputs in isolation, disregarding the deep domain constraints inherent in civil engineering. A valid semantic BIM record must capture and formalize:
+The semantic interpretation of Building Information Modeling (BIM) data in the
+context of the Industry Foundation Classes (IFC) schema is not a generic
+prompt-response task. Standard natural language processing systems often treat
+text inputs and structured outputs in isolation, disregarding the deep domain
+constraints inherent in civil engineering. A valid semantic BIM record must
+capture and formalize:
 
-- **Engineering Intent**: The precise technical objective requested by the practitioner (e.g., classification, property enrichment, spatial query, compliance check).
-- **BIM/IFC Context**: The structural topology, spatial relationships, and metadata of the element under consideration.
-- **IFC Class Candidate**: The target entity within the IFC schema hierarchy (e.g., `IfcWall`, `IfcColumn`, `IfcSlab`).
-- **Information Requirements**: The Level of Information Need (LOIN) specifying mandatory properties, quantities, and classifications.
-- **Evidence Trace**: The explicit grounds (GlobalIds, property sets, rules, or geometric parameters) that justify a classification or property assignment.
-- **Validation State and Traceability**: Audit metadata detailing origin, sanitization status, and schema validation results.
+- **Engineering Intent**: The precise technical objective requested by the
+  practitioner (e.g., classification, property enrichment, spatial query,
+  compliance check).
+- **BIM/IFC Context**: The structural topology, spatial relationships, and
+  metadata of the element under consideration.
+- **IFC Class Candidate**: The target entity within the IFC schema hierarchy
+  (e.g., `IfcWall`, `IfcColumn`, `IfcSlab`).
+- **Information Requirements**: The Level of Information Need (LOIN)
+  specifying mandatory properties, quantities, and classifications.
+- **Evidence Trace**: The explicit grounds (GlobalIds, property sets, rules, or
+  geometric parameters) that justify a classification or property assignment.
+- **Validation State and Traceability**: Audit metadata detailing origin,
+  sanitization status, and schema validation results.
 
-Without these components, models are prone to hallucinating invalid IFC classes, incorrect property set mappings, and groundless technical claims — compromising safety and quality in governed AECO workflows.
+Without these components, models are prone to hallucinating invalid IFC classes,
+incorrect property set mappings, and groundless technical claims — compromising
+safety and quality in governed AECO workflows.
 
 ---
 
 ## 2. Rejection of Plain Instruction-Output Training
 
-Conventional LLM fine-tuning on plain `instruction/context/output` text pairs was rejected for several critical reasons:
+Conventional LLM fine-tuning on plain `instruction/context/output` text pairs
+was rejected for several critical reasons:
 
-1. **Lack of Schema Enforcement**: Standard token-generation models do not inherently respect the strict syntax and schema requirements of formats like IFC, ifcJSON, or structured engineering contracts.
-2. **Hallucination of Catalogues**: In civil engineering, elements must map to canonical classification catalogues and standard property sets. Plain text outputs fail to maintain alignments with these Single Sources of Truth (SSOT).
-3. **Absence of Grounding and Rationale**: A plain text response cannot easily be audited. Engineering decisions require a clear evidence trace back to the source model.
-4. **Mutational Safety**: Plain instructions do not distinguish between safe queries (read-only preview) and destructive mutations (model alterations), presenting risks to the integrity of Common Data Environments (CDE).
+1. **Lack of Schema Enforcement**: Standard token-generation models do not
+   inherently respect the strict syntax and schema requirements of formats like
+   IFC, ifcJSON, or structured engineering contracts.
+2. **Hallucination of Catalogues**: In civil engineering, elements must map to
+   canonical classification catalogues and standard property sets. Plain text
+   outputs fail to maintain alignments with these Single Sources of Truth
+   (SSOT).
+3. **Absence of Grounding and Rationale**: A plain text response cannot easily
+   be audited. Engineering decisions require a clear evidence trace back to
+   the source model.
+4. **Mutational Safety**: Plain instructions do not distinguish between safe
+   queries (read-only preview) and destructive mutations (model alterations),
+   presenting risks to the integrity of Common Data Environments (CDE).
 
-Dataset design therefore centers on structured, schema-validated runtime payloads mapped to canonical catalogues.
+Dataset design therefore centers on structured, schema-validated runtime
+payloads mapped to canonical catalogues.
 
 ---
 
@@ -32,15 +57,28 @@ Dataset design therefore centers on structured, schema-validated runtime payload
 
 The dataset and pipeline infrastructure is governed by several key concepts:
 
-- **Runtime Payload and SSOT**: A structured payload encapsulates the input prompt, the active database schema, and the target catalogues, ensuring any generated output is evaluated against a Single Source of Truth.
-- **Capabilities Catalog**: A registry of supported operations, classes, and properties, preventing the AI from generating arbitrary properties or violating schema rules.
-- **Internal Milestones (S18 / S19 / S20)**: Successive pipeline iterations improving validation rigor, catalogue mapping, and blocked-by-prerequisite gate enforcement.
-  - **S18**: Introduced database schemas for dataset candidate tracking; suspended due to inadequate validation gates.
+- **Runtime Payload and SSOT**: A structured payload encapsulates the input
+  prompt, the active database schema, and the target catalogues, ensuring any
+  generated output is evaluated against a Single Source of Truth.
+- **Capabilities Catalog**: A registry of supported operations, classes, and
+  properties, preventing the AI from generating arbitrary properties or
+  violating schema rules.
+- **Internal Milestones (S18 / S19 / S20)**: Successive pipeline iterations
+  improving validation rigor, catalogue mapping, and blocked-by-prerequisite
+  gate enforcement.
+  - **S18**: Introduced database schemas for dataset candidate tracking;
+    suspended due to inadequate validation gates.
   - **S19**: Introduced runtime catalogue mapping and strict output validation.
   - **S20**: Established the fail-closed "blocked-by-prerequisite" gate.
-- **pilot1000**: A private development pilot of 1,000 curated cases for early LoRA/QLoRA adaptation experiments (not published).
-- **sample20**: A public, fully sanitized subset of 20 representative cases for scientific evidence and reproducible evaluation.
-- **Replay and Guided Harness**: Codebases that ingest prompt records and run deterministic replay validation to verify schema compliance, class mapping, and evidence-tracing contracts.
+- **private pilot dataset**: A private development pilot of 1,000 curated cases
+  for early LoRA/QLoRA adaptation experiments (not published).
+- **private high-fidelity internal dataset**: A private high-fidelity seed
+  dataset used for closed-loop testing (not published).
+- **sample20**: A public, fully sanitized subset of 20 representative cases for
+  scientific evidence and reproducible evaluation.
+- **Replay and Guided Harness**: Codebases that ingest prompt records and run
+  deterministic replay validation to verify schema compliance, class mapping,
+  and evidence-tracing contracts.
 
 ---
 
@@ -61,7 +99,7 @@ The dataset and pipeline infrastructure is governed by several key concepts:
 | 10 | JSON/JSONL Validation Strategy | Automated test suites for syntax and full schema compliance. |
 | 11 | Dataset Candidate Governance | SQL migrations tracking `FrameworkDatasetCandidate` and `FrameworkDatasetGateDecision`. |
 | 12 | Train/Val/Test/Eval/Rejected Split | Formulated strict criteria for dataset split assignment. |
-| 13 | pilot1000 Private Experiment Boundary | QLoRA fine-tuning on private cluster; private model boundary defined. |
+| 13 | private pilot dataset Private Experiment Boundary | QLoRA fine-tuning on private cluster; private model boundary defined. |
 | 14 | sample20 Public Sanitized Subset | 20 representative cases extracted; proprietary data replaced with synthetic alternatives. |
 | 15 | Replay Harness | Lightweight Python harness for deterministic schema and intent checking. |
 | 16 | Guided Public Harness | Hugging Face interactive harness for external reviewer access. |
@@ -96,8 +134,15 @@ A single valid semantic dataset record contains:
 
 ## 6. Public Artifact Boundary
 
-The public artifacts in this repository represent a strictly sanitized and demonstrative research surface:
+The public artifacts in this repository represent a strictly sanitized and
+demonstrative research surface:
 
-- **Sanitized Dataset**: `sample20` uses generic, synthetic cases. No real building models, proprietary databases, or private corporate structures are exposed.
-- **No Private Models**: The public harnesses run on lightweight, open-source base models or deterministic replay files. No private weights or custom adapters are published.
-- **Research Orientation**: This repository demonstrates feasibility of the semantic contract and benchmark protocol. It does not provide certified commercial deliverables or professional engineering signatures.
+- **Sanitized Dataset**: `sample20` uses generic, synthetic cases. No real
+  building models, proprietary databases, or private corporate structures
+  are exposed.
+- **No Private Models**: The public harnesses run on lightweight, open-source
+  base models or deterministic replay files. No private weights or custom
+  adapters are published.
+- **Research Orientation**: This repository demonstrates feasibility of the
+  semantic contract and benchmark protocol. It does not provide certified
+  commercial deliverables or professional engineering signatures.
