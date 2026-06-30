@@ -27,6 +27,10 @@ Without these components, models are prone to hallucinating invalid IFC classes,
 incorrect property set mappings, and groundless technical claims — compromising
 safety and quality in governed AECO workflows.
 
+![Semantic BIM/IFC record concept](../assets/figures/figure_02_semantic_bim_prompt.png)
+
+*Figure 1. Structured semantic BIM/IFC record concept used to connect natural-language engineering requests with IFC grounding, information requirements, validation metadata, and evidence traces.*
+
 ---
 
 ## 2. Rejection of Plain Instruction-Output Training
@@ -79,6 +83,10 @@ The dataset and pipeline infrastructure is governed by several key concepts:
 - **Replay and Guided Harness**: Codebases that ingest prompt records and run
   deterministic replay validation to verify schema compliance, class mapping,
   and evidence-tracing contracts.
+
+![Dataset construction and benchmark cycle](../assets/figures/figure_03_experimental_cycle.png)
+
+*Figure 2. Dataset and benchmark lifecycle linking record construction, validation, replay, baseline evaluation, future adaptation, and XAI-oriented assessment.*
 
 ---
 

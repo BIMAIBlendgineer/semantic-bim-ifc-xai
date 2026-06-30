@@ -130,6 +130,10 @@ flowchart LR
 - **Evidence**: Textual trace identifying which input terms triggered the
   classification
 
+![Semantic BIM/IFC record concept](docs/assets/figures/figure_02_semantic_bim_prompt.png)
+
+*Figure 1. Transformation of a natural-language civil engineering request into a structured BIM/IFC semantic record with IFC candidate, information requirements, validation metadata, and evidence trace.*
+
 ---
 
 ## 6. Dataset Construction Methodology
@@ -151,6 +155,10 @@ Key methodological decisions include:
 
 For the full academic history of dataset construction phases, see
 [docs/methodology/dataset_construction_and_training_readiness.md](docs/methodology/dataset_construction_and_training_readiness.md).
+
+![Dataset construction and benchmark cycle](docs/assets/figures/figure_03_experimental_cycle.png)
+
+*Figure 2. Experimental cycle connecting dataset construction, validation gates, replay evaluation, benchmark baselines, future LoRA/QLoRA adaptation, and XAI-oriented evaluation.*
 
 ---
 
