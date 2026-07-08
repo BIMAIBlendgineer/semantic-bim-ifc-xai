@@ -1,6 +1,6 @@
-# Benchmark Metrics — Sample20 Smoke Run
+# Benchmark Metrics - sample20 smoke run
 
-## Sample: smoke20 (n=20)
+## Sample: smoke20 replay over sample20 (n=20)
 
 | Metric | Value |
 |--------|-------|
@@ -22,5 +22,5 @@
 
 ## Status: RESEARCH_PASS
 
-All accuracy metrics achieved perfect or near-perfect scores on the 20-sample evaluation set.
-Hard blocks (n=4) reflect conservative governance in the experimental Semantic BIM contract.
+These are public sample validation metrics for the smoke20 replay run over sample20.
+They are not the final A1 benchmark.
