@@ -1,23 +1,34 @@
 # Public Evidence
 
-This repository contains a public, reduced and sanitized evidence layer for Semantic XAIBIM.
+This repository contains a public, reduced, and sanitized evidence layer for the sample20 public artifact.
 
 ## Current public status
 
-    RESEARCH_PASS
+`RESEARCH_PASS`
 
-## Evidence included
+## Public Executable Checks
 
-- Reduced sample predictions.
-- Aggregated smoke20 metrics.
-- Public research summary.
-- Normative text audit summary.
+| Check | Public executable? | Command/path | Status | Notes |
+| --- | --- | --- | --- | --- |
+| JSON parse | yes | `python harness/replay.py --sample sample20/` | PASS | 20 records parsed |
+| Schema validation | yes | `python harness/replay.py --sample sample20/` | PASS | Minimal public contract satisfied |
+| Replay | yes | `python harness/replay.py --sample sample20/` | PASS | Deterministic replay completed |
+| Evidence trace presence | yes | `sample20/sample20_public_records.jsonl` | PASS | Each record includes evidence-linked output fields |
+| Forbidden pattern scan | yes | repository scan | PASS | Public surface contains no prohibited private markers |
+| Leakage/dedupe | no | methodology only | METHODOLOGICAL | Not exposed as a public executable check |
+| NER sanitization | no | methodology only | METHODOLOGICAL | Not exposed as a public executable check |
+
+## Evidence Included
+
+- Public sample20 records.
+- Public smoke/replay execution over sample20.
+- Public sample validation summary.
 - Replay harness.
-- Schema validator.
+- Schema validator helper.
 
-## Evidence interpretation
+## Evidence Interpretation
 
-The current evidence demonstrates that a preliminary Semantic BIM/IFC prompt-to-structure workflow can produce structured, auditable outputs under a controlled research setting.
+The current evidence shows that a public sanitized sample can be replayed and validated with auditable outputs under a controlled research setting.
 
 The evidence does not claim:
 
