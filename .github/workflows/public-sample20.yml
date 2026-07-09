@@ -1,6 +1,7 @@
 name: Public sample20 validation
 
 on:
+
   push:
     branches:
       - main
@@ -11,6 +12,7 @@ on:
 jobs:
   validate-public-sample20:
     runs-on: ubuntu-latest
+
     steps:
       - name: Check out repository
         uses: actions/checkout@v4

@@ -2,15 +2,11 @@
 
 [![Public sample20 validation][sample20-badge]][sample20-workflow]
 
-This repository is an academic research artifact for public sample validation,
-traceable semantic BIM/IFC replay, and evidence-grounded AI benchmarking.
+This repository is an academic research artifact for public sample validation, traceable semantic BIM/IFC replay, and evidence-grounded AI benchmarking.
 
-This is an academic research artifact.
-It is not a certification tool, production BIM service, or institutional endorsement.
-It contains only public synthetic or sanitized examples.
+This is an academic research artifact. It is not a certification tool, production BIM service, or institutional endorsement. It contains only public synthetic or sanitized examples.
 
-The badge validates only the public sanitized sample20 replay and schema checks.
-It is not a certification or final A1 benchmark.
+The badge validates only the public sanitized `sample20` replay and schema checks. It is not a certification or final A1 benchmark.
 
 ## What This Repository Contains
 
@@ -44,7 +40,9 @@ It is not a certification or final A1 benchmark.
 
 ## sample20
 
-`sample20` is the public sanitized sample dataset. `smoke20` is the public smoke/replay validation run executed against `sample20`; it is not a separate dataset.
+`sample20` is the public sanitized sample dataset.
+
+`smoke20` is the public smoke/replay validation run executed against `sample20`; it is not a separate dataset.
 
 The public sample is intentionally small so a reviewer can inspect the records, replay the harness, and understand the public/private boundary quickly.
 
@@ -54,7 +52,7 @@ See [QUICKSTART.md](QUICKSTART.md) for the minimal local replay steps.
 
 ## Validation Status
 
-Current public validation status: `RESEARCH_PASS`
+Current public validation status: `RESEARCH_PASS`.
 
 The public replay and evidence summary are documented in `PUBLIC_EVIDENCE.md` and `benchmark/results_sample20.md`.
 
@@ -67,8 +65,8 @@ The public replay and evidence summary are documented in `PUBLIC_EVIDENCE.md` an
 
 ## Links to Hugging Face
 
-- Public replay space: <https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay>
-- Public harness space: <https://huggingface.co/spaces/bimaiblend/semantic-xaibim-harness>
+- Public replay space: https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay
+- Public harness space: https://huggingface.co/spaces/bimaiblend/semantic-xaibim-harness
 
 ## Methodology Docs
 
