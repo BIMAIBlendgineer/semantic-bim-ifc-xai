@@ -10,6 +10,8 @@ abstract: "Public academic research artifact for evidence-grounded semantic BIM/
 keywords:
   - BIM
   - IFC
+  - semantic BIM
+  - semantic IFC
   - semantic AI
   - evidence-grounded
   - benchmark

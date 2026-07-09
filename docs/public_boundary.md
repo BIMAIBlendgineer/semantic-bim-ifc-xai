@@ -44,4 +44,6 @@ The public boundary is enforced by:
 
 ## Disclaimer
 
-This is an academic research artifact. It is not a certification tool, production BIM service, or institutional endorsement. It contains only public synthetic or sanitized examples.
+This is an academic research artifact.
+It is not a certification tool, production BIM service, or institutional endorsement.
+It contains only public synthetic or sanitized examples.

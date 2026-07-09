@@ -1,9 +1,16 @@
 # Semantic BIM/IFC Evidence-Grounded Harness
 
+[![Public sample20 validation][sample20-badge]][sample20-workflow]
+
 This repository is an academic research artifact for public sample validation,
 traceable semantic BIM/IFC replay, and evidence-grounded AI benchmarking.
 
-This is an academic research artifact. It is not a certification tool, production BIM service, or institutional endorsement. It contains only public synthetic or sanitized examples.
+This is an academic research artifact.
+It is not a certification tool, production BIM service, or institutional endorsement.
+It contains only public synthetic or sanitized examples.
+
+The badge validates only the public sanitized sample20 replay and schema checks.
+It is not a certification or final A1 benchmark.
 
 ## What This Repository Contains
 
@@ -80,3 +87,6 @@ flowchart TD
     D --> E[Evidence trace review]
     E --> F[Public validation summary]
 ```
+
+[sample20-badge]: https://github.com/BIMAIBlendgineer/semantic-bim-ifc-xai/actions/workflows/public-sample20.yml/badge.svg
+[sample20-workflow]: https://github.com/BIMAIBlendgineer/semantic-bim-ifc-xai/actions/workflows/public-sample20.yml
