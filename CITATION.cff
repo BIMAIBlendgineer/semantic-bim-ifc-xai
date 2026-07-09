@@ -5,6 +5,7 @@ type: software
 authors:
   - family-names: "de Freitas Oliveira Mousinho"
     given-names: "Dean Delmo"
+
 repository-code: "https://github.com/BIMAIBlendgineer/semantic-bim-ifc-xai"
 abstract: "Public academic research artifact for evidence-grounded semantic BIM/IFC sample validation, replay, and public benchmark reporting."
 keywords:
