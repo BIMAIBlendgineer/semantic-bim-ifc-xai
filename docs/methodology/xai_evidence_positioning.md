@@ -4,6 +4,8 @@
 
 This repository uses XAI in an evidence-oriented sense.
 
+In this work, traceability and evidence are the operational XAI criterion. The objective is not to expose hidden model internals, but to make the BIM/IFC output auditable through selected classes, properties, relationships, missing information, validation status and evidence traces.
+
 It does not claim full mathematical interpretability, model-internal explanation or SHAP/LIME-style feature attribution.
 
 ## Operational meaning

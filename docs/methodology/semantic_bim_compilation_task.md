@@ -4,6 +4,8 @@
 
 The semantic BIM compilation task converts a natural-language AECO/BIM request into a structured IFC-aware semantic record.
 
+This task operationalizes the broader Civil Engineering objective of AI-assisted BIM 3D/IFC interpretation. BIM 3D/IFC is the technical object; semantic compilation is the computational task; traceability and evidence are the XAI criterion; the chat interface is the user-facing surface; and the benchmark is the evaluation method.
+
 The objective is not to generate a pleasant free-text answer first. The objective is to produce a machine-checkable contract that can be validated, replayed and compared.
 
 In practical terms, this is a prompt-to-IFC contract.
