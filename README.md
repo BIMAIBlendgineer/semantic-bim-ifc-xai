@@ -10,6 +10,8 @@ The badge validates only the public sanitized `sample20` replay and schema check
 
 ## What this project studies
 
+This repository supports the broader research objective of explainable AI-assisted semantic BIM/IFC interpretation for Civil Engineering. Its technical focus is narrower and measurable: converting BIM/AECO requests and IFC-related runtime context into structured IFC-aware semantic records with validation, evidence traceability and reproducible replay.
+
 This repository is not a generic BIM chatbot and does not claim to provide a complete BIM automation product.
 
 It studies a narrower research task: **semantic BIM compilation**. The task is to convert natural-language AECO/BIM requests into structured IFC-aware semantic records that can be validated, replayed, compared and traced through evidence.
@@ -33,6 +35,16 @@ reproducible replay and benchmark
 ```
 
 The public repository provides a minimal reproducibility sample and documentation of the protocol. The larger curated synthetic/controlled dataset and systematic benchmark are the subject of the advanced computing access work.
+
+The positioning can be read as follows:
+
+```text
+BIM 3D/IFC is the technical object.
+Semantic compilation is the computational task.
+Traceability and evidence are the XAI criterion.
+The chat interface is the user-facing surface.
+The benchmark is the evaluation method.
+```
 
 ## Why not just IfcOpenShell + LLM + RAG?
 
@@ -136,7 +148,7 @@ Current public validation status: `RESEARCH_PASS`.
 
 The public replay and evidence summary are documented in `PUBLIC_EVIDENCE.md` and `benchmark/results_sample20.md`.
 
-internal preliminary experiments are summarized in [`docs/experiments/internal_preliminary_semantic_bim_runs.md`](docs/experiments/internal_preliminary_semantic_bim_runs.md). These runs are feasibility evidence only and are not final A1 benchmark results.
+Internal preliminary experiments are summarized in [`docs/experiments/internal_preliminary_semantic_bim_runs.md`](docs/experiments/internal_preliminary_semantic_bim_runs.md). These runs are feasibility evidence only and are not final A1 benchmark results.
 
 ## What Is Not Claimed
 
@@ -157,7 +169,7 @@ internal preliminary experiments are summarized in [`docs/experiments/internal_p
 - `docs/methodology/dataset_construction_and_training_readiness.md`
 - `docs/methodology/semantic_bim_compilation_task.md`
 - `docs/methodology/xai_evidence_positioning.md`
-- `docs/methodology/dataset_scope_cpca_a1.md`
+- `docs/methodology/dataset_scope_a1_advanced_computing.md`
 - `docs/public_boundary.md`
 
 ## Evidence Trace Diagram
