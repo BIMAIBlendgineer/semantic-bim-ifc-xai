@@ -87,13 +87,13 @@ The preliminary runs show that the proposed protocol can measure:
 
 These runs do not claim that:
 
-* a complete corpus already exists;
-* the final A1 dataset has already been produced;
-* the model is trained;
-* an adapter is ready;
-* the benchmark is final;
-* the system is production ready;
-* the repository is a certified BIM or regulatory checker.
+* it does not claim that a complete corpus already exists;
+* it does not claim that the final A1 dataset has already been produced;
+* it does not claim that the model is trained;
+* it does not claim that an adapter is ready;
+* it does not claim that the benchmark is final;
+* it does not claim that the system is production ready;
+* it does not claim that the repository is a certified BIM or regulatory checker.
 
 ## Relation to the proposed A1 work
 
