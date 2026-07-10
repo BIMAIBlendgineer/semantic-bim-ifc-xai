@@ -12,7 +12,7 @@ license: mit
 
 # Semantic AI for BIM/IFC: Guided Research Demo
 
-**Subtitle**: Natural-language civil engineering request → semantic BIM/IFC preview → LOI table → conceptual LOD preview → auditable JSON.
+**Subtitle**: Natural-language AECO/BIM request → IFC-aware semantic contract → evidence trace → validation/replay → AECO answer.
 
 > [!WARNING]
 > **Important Disclaimers**:
@@ -44,8 +44,8 @@ This Space is a public research validation harness loaded with 20 sanitized, han
 - **What to try**: Enter a query or select an example to see what metadata would be mapped in this harness.
 - **What result means**: Shows the closest matching record in JSON format for review.
 
-### 4. Validate JSON
-- **What this does**: Checks whether a JSON output meets the minimum research contract schema.
+### 4. Validate illustrative demo JSON
+- **What this does**: Checks whether a JSON output meets the minimum research contract schema. This is a demo helper, not the full sample20 public record validator.
 - **What to try**: Edit the pre-populated JSON payload and click 'Validate' to check for compliance.
 - **What result means**: This validates the minimum research contract, not a BIM certification.
 

@@ -671,7 +671,7 @@ def build_demo() -> gr.Blocks:
             "# Semantic AI for BIM/IFC: Guided Research Demo\n\n"
             f"Loaded public records: **{len(RECORDS)}**\n\n"
             f"{PUBLIC_WARNING}\n\n"
-            "**Subtitle**: Natural-language civil engineering request → semantic BIM/IFC preview → LOI table → conceptual LOD preview → auditable JSON.\n\n"
+            "**Subtitle**: Natural-language AECO/BIM request → IFC-aware semantic contract → evidence trace → validation/replay → AECO answer.\n\n"
             "**Disclaimer**: This public research demo does not generate certified IFC geometry or professional BIM deliverables. "
             "It provides a conceptual 3D preview, structured semantic metadata, LOI explanation, validation and replay over a reduced sanitized sample."
         )
@@ -841,10 +841,10 @@ def build_demo() -> gr.Blocks:
                 outputs=[semantic_summary, semantic_json, semantic_warning],
             )
 
-        with gr.Tab("Validate JSON"):
+        with gr.Tab("Validate illustrative demo JSON"):
             gr.Markdown(
                 "### Validate Research JSON Payload\n"
-                "- **What this does**: Permite comprobar si una salida cumple el contrato mínimo.\n"
+                "- **What this does**: Permite comprobar si una salida cumple el contrato mínimo. This is a demo helper, not the full sample20 public record validator.\n"
                 "- **What to try**: Edit the pre-populated JSON payload and click 'Validate' to check for compliance.\n"
                 "- **What result means**: This validates the minimum research contract, not a BIM certification."
             )
