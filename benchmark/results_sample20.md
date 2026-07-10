@@ -2,6 +2,8 @@
 
 These are public sample validation results, not the final A1 benchmark.
 
+Note: these results refer only to the public `sample20` reproducibility sample. They should not be interpreted as final benchmark results for the larger A1-style experimental dataset.
+
 ## Executed Replay
 
 - Command: `python harness/replay.py --sample sample20/`
