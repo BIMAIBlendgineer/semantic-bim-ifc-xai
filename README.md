@@ -118,18 +118,18 @@ This is closer to provenance, evidence traceability and structured auditability 
 
 | Artifact | Purpose |
 | --- | --- |
-| [sample20_public_records.jsonl](file:///c:/0%20Work/0%20XAIBIM%20AI%20Trainer/semantic-bim-ifc-xai/sample20/sample20_public_records.jsonl) | Sanitized public sample records |
-| [schema_minimal.json](file:///c:/0%20Work/0%20XAIBIM%20AI%20Trainer/semantic-bim-ifc-xai/sample20/schema_minimal.json) | Minimal public contract for replay checks |
-| [replay.py](file:///c:/0%20Work/0%20XAIBIM%20AI%20Trainer/semantic-bim-ifc-xai/harness/replay.py) | Public replay entrypoint |
-| [schema_validator.py](file:///c:/0%20Work/0%20XAIBIM%20AI%20Trainer/semantic-bim-ifc-xai/harness/schema_validator.py) | Basic JSONL schema inspection helper |
-| [smoke20_metrics_table.md](file:///c:/0%20Work/0%20XAIBIM%20AI%20Trainer/semantic-bim-ifc-xai/benchmark/metrics/smoke20_metrics_table.md) | Smoke run metrics table |
-| [smoke20_research_summary.json](file:///c:/0%20Work/0%20XAIBIM%20AI%20Trainer/semantic-bim-ifc-xai/benchmark/metrics/smoke20_research_summary.json) | JSON summary of the smoke run |
-| [semantic_bim_output_schema.json](file:///c:/0%20Work/0%20XAIBIM%20AI%20Trainer/semantic-bim-ifc-xai/benchmark/schema/semantic_bim_output_schema.json) | Semantic target schema definition |
-| [public_forbidden_scan.py](file:///c:/0%20Work/0%20XAIBIM%20AI%20Trainer/semantic-bim-ifc-xai/scripts/public_forbidden_scan.py) | Public forbidden scan checker script |
-| [schema_contract_map.md](file:///c:/0%20Work/0%20XAIBIM%20AI%20Trainer/semantic-bim-ifc-xai/docs/methodology/schema_contract_map.md) | Schema contract layers map |
-| [results_sample20.md](file:///c:/0%20Work/0%20XAIBIM%20AI%20Trainer/semantic-bim-ifc-xai/benchmark/results_sample20.md) | Executed public sample validation results |
-| [internal_preliminary_semantic_bim_runs.md](file:///c:/0%20Work/0%20XAIBIM%20AI%20Trainer/semantic-bim-ifc-xai/docs/experiments/internal_preliminary_semantic_bim_runs.md) | Internal preliminary experiments and feasibility evidence |
-| [validation_gates.md](file:///c:/0%20Work/0%20XAIBIM%20AI%20Trainer/semantic-bim-ifc-xai/docs/methodology/validation_gates.md) | Methodology for the public validation gates |
+| [sample20_public_records.jsonl](sample20/sample20_public_records.jsonl) | Sanitized public sample records |
+| [schema_minimal.json](sample20/schema_minimal.json) | Minimal public contract for replay checks |
+| [replay.py](harness/replay.py) | Public replay entrypoint |
+| [schema_validator.py](harness/schema_validator.py) | Basic JSONL schema inspection helper |
+| [smoke20_metrics_table.md](benchmark/metrics/smoke20_metrics_table.md) | Smoke run metrics table |
+| [smoke20_research_summary.json](benchmark/metrics/smoke20_research_summary.json) | JSON summary of the smoke run |
+| [semantic_bim_output_schema.json](benchmark/schema/semantic_bim_output_schema.json) | Semantic target schema definition |
+| [public_forbidden_scan.py](scripts/public_forbidden_scan.py) | Public forbidden scan checker script |
+| [schema_contract_map.md](docs/methodology/schema_contract_map.md) | Schema contract layers map |
+| [results_sample20.md](benchmark/results_sample20.md) | Executed public sample validation results |
+| [internal_preliminary_semantic_bim_runs.md](docs/experiments/internal_preliminary_semantic_bim_runs.md) | Internal preliminary experiments and feasibility evidence |
+| [validation_gates.md](docs/methodology/validation_gates.md) | Methodology for the public validation gates |
 
 ## sample20
 
@@ -176,14 +176,14 @@ Internal preliminary experiments are summarized in [`docs/experiments/internal_p
 
 ## Methodology Docs
 
-- [validation_gates.md](file:///c:/0%20Work/0%20XAIBIM%20AI%20Trainer/semantic-bim-ifc-xai/docs/methodology/validation_gates.md)
-- [xai_evaluation_position.md](file:///c:/0%20Work/0%20XAIBIM%20AI%20Trainer/semantic-bim-ifc-xai/docs/methodology/xai_evaluation_position.md)
-- [dataset_construction_and_training_readiness.md](file:///c:/0%20Work/0%20XAIBIM%20AI%20Trainer/semantic-bim-ifc-xai/docs/methodology/dataset_construction_and_training_readiness.md)
-- [semantic_bim_compilation_task.md](file:///c:/0%20Work/0%20XAIBIM%20AI%20Trainer/semantic-bim-ifc-xai/docs/methodology/semantic_bim_compilation_task.md)
-- [xai_evidence_positioning.md](file:///c:/0%20Work/0%20XAIBIM%20AI%20Trainer/semantic-bim-ifc-xai/docs/methodology/xai_evidence_positioning.md)
-- [dataset_scope_a1_advanced_computing.md](file:///c:/0%20Work/0%20XAIBIM%20AI%20Trainer/semantic-bim-ifc-xai/docs/methodology/dataset_scope_a1_advanced_computing.md)
-- [schema_contract_map.md](file:///c:/0%20Work/0%20XAIBIM%20AI%20Trainer/semantic-bim-ifc-xai/docs/methodology/schema_contract_map.md)
-- [public_boundary.md](file:///c:/0%20Work/0%20XAIBIM%20AI%20Trainer/semantic-bim-ifc-xai/docs/public_boundary.md)
+- [validation_gates.md](docs/methodology/validation_gates.md)
+- [xai_evaluation_position.md](docs/methodology/xai_evaluation_position.md)
+- [dataset_construction_and_training_readiness.md](docs/methodology/dataset_construction_and_training_readiness.md)
+- [semantic_bim_compilation_task.md](docs/methodology/semantic_bim_compilation_task.md)
+- [xai_evidence_positioning.md](docs/methodology/xai_evidence_positioning.md)
+- [dataset_scope_a1_advanced_computing.md](docs/methodology/dataset_scope_a1_advanced_computing.md)
+- [schema_contract_map.md](docs/methodology/schema_contract_map.md)
+- [public_boundary.md](docs/public_boundary.md)
 
 ## Evidence Trace Diagram
 
