@@ -6,7 +6,7 @@ This repository is an academic research artifact for public sample validation, t
 
 This is an academic research artifact. It is not a certification tool, production BIM service, or institutional endorsement. It contains only public synthetic or sanitized examples.
 
-The badge validates only the public sanitized `sample20` replay and schema checks. It is not a certification or final A1 benchmark.
+The badge validates the public sanitized `sample20` replay, minimal public schema contract, forbidden-pattern scan and public Hugging Face harness self-test. It is not a certification, production readiness claim or final A1 benchmark.
 
 ## What this project studies
 
@@ -157,6 +157,12 @@ python harness/replay.py --sample sample20/
 python harness/schema_validator.py sample20/sample20_public_records.jsonl
 python scripts/public_forbidden_scan.py
 ```
+
+Additionally, the optional Hugging Face harness self-test can be run:
+```powershell
+python spaces/huggingface_harness/app.py --self-test
+```
+The Hugging Face harness dependencies are isolated in spaces/huggingface_harness/requirements.txt.
 
 The public replay and evidence summary are documented in `PUBLIC_EVIDENCE.md` and `benchmark/results_sample20.md`.
 

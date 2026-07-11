@@ -1,4 +1,4 @@
-name: Public sample20 validation
+name: Public validation checks
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
       - main
 
 jobs:
-  validate-public-sample20:
+  validate-public-artifact:
     runs-on: ubuntu-latest
 
     steps:

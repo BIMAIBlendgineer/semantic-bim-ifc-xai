@@ -2,7 +2,7 @@
 
 ## Summary
 
-This release candidate packages the public sanitized sample20 workflow for academic review.
+This release packages the first public sanitized `sample20` workflow for academic review.
 
 ## Public Artifacts
 
@@ -45,6 +45,6 @@ python harness/schema_validator.py sample20/sample20_public_records.jsonl
 - Internal logs
 - Non-public artifacts
 
-## Suggested Tag After Human Review
+## Published Tag
 
 `v0.1-public-sample20`
