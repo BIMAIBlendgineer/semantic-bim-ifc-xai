@@ -1,2 +1,3 @@
-# Public replay harness uses Python standard library only.
-
+# Root public replay and validation harnesses use Python standard library only.
+# The optional Hugging Face demo has its own dependencies in:
+# spaces/huggingface_harness/requirements.txt
