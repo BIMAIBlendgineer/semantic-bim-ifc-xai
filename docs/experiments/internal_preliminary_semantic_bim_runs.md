@@ -4,6 +4,8 @@
 
 This document summarizes internal preliminary experiments used to test whether the semantic BIM/IFC compilation protocol is technically measurable.
 
+The underlying internal report files are not part of this public release. The values below are aggregate internal feasibility indicators. They are included to document motivation and scope, not to provide an independently reproducible public benchmark.
+
 These experiments are internal preliminary experiments and are not final A1 benchmark results, trained model claims or production readiness evidence. They are feasibility evidence for the proposed benchmark workflow.
 
 ## Research task

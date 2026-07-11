@@ -76,25 +76,78 @@ def main(argv: list[str] | None = None) -> int:
         required_keys.update(key for key in schema.get("required", []) if isinstance(key, str))
 
     schema_ok = True
-    for record in records:
-        if not required_keys.issubset(record.keys()):
-            schema_ok = False
-            break
-        validation = record.get("validation")
-        if not isinstance(validation, dict) or validation.get("ok") is not True:
-            schema_ok = False
-            break
+    replay_ok = bool(records)
+    errors: list[str] = []
 
-    replay_ok = bool(records) and all(record.get("ok") is True for record in records)
+    for idx, record in enumerate(records):
+        record_errors = []
+        # Check required keys
+        missing_keys = required_keys - record.keys()
+        if missing_keys:
+            record_errors.append(f"Missing required keys: {list(missing_keys)}")
+        else:
+            # Validate types and values
+            if record.get("ok") is not True:
+                record_errors.append("ok is not True")
+
+            canonical = record.get("canonical_output")
+            if not isinstance(canonical, dict):
+                record_errors.append("canonical_output is not a dict")
+            else:
+                if "evidence_trace" not in canonical:
+                    record_errors.append("Missing evidence_trace in canonical_output")
+                else:
+                    ev_trace = canonical.get("evidence_trace")
+                    if ev_trace is None:
+                        record_errors.append("evidence_trace is null")
+                    elif isinstance(ev_trace, (list, dict, str)) and len(ev_trace) == 0:
+                        record_errors.append("evidence_trace is empty")
+                    elif not isinstance(ev_trace, (list, dict, str)):
+                        record_errors.append("evidence_trace is not a valid container/string")
+
+            validation = record.get("validation")
+            if not isinstance(validation, dict):
+                record_errors.append("validation is not a dict")
+            elif validation.get("ok") is not True:
+                record_errors.append("validation.ok is not True")
+
+            sample_id = record.get("sample_id")
+            if not isinstance(sample_id, str):
+                record_errors.append("sample_id is not a string")
+            elif not sample_id.strip():
+                record_errors.append("sample_id is empty")
+
+            if not isinstance(record.get("parsed_output"), dict):
+                record_errors.append("parsed_output is not a dict")
+
+            if not isinstance(record.get("expected_output"), dict):
+                record_errors.append("expected_output is not a dict")
+
+        if record_errors:
+            schema_ok = False
+            errors.append(f"Record {idx}: " + " | ".join(record_errors))
+
+        if record.get("ok") is not True:
+            replay_ok = False
+
+    replay_passed = replay_ok and schema_ok
 
     print("SEMANTIC_XAIBIM_PUBLIC_REPLAY")
     print(f"sample={sample_file}")
     print(f"records={len(records)}")
     print(f"json_parse={'PASS' if len(records) > 0 else 'FAIL'}")
     print(f"schema={'PASS' if schema_ok else 'FAIL'}")
-    print(f"replay={'PASS' if replay_ok and schema_ok else 'FAIL'}")
-    print(f"status={'REPLAY_OK' if replay_ok and schema_ok else 'REPLAY_FAIL'}")
-    return 0 if replay_ok and schema_ok else 1
+    print(f"replay={'PASS' if replay_passed else 'FAIL'}")
+    print(f"status={'REPLAY_OK' if replay_passed else 'REPLAY_FAIL'}")
+
+    if not replay_passed and errors:
+        print("\nReplay validation errors:", file=sys.stderr)
+        for err in errors[:10]:
+            print(f"  {err}", file=sys.stderr)
+        if len(errors) > 10:
+            print(f"  ... and {len(errors) - 10} more errors", file=sys.stderr)
+
+    return 0 if replay_passed else 1
 
 
 if __name__ == "__main__":

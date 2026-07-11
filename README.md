@@ -118,13 +118,18 @@ This is closer to provenance, evidence traceability and structured auditability 
 
 | Artifact | Purpose |
 | --- | --- |
-| `sample20/sample20_public_records.jsonl` | Sanitized public sample records |
-| `sample20/schema_minimal.json` | Minimal public contract for replay checks |
-| `harness/replay.py` | Public replay entrypoint |
-| `harness/schema_validator.py` | Basic JSONL schema inspection helper |
-| `benchmark/results_sample20.md` | Executed public sample validation results |
-| `docs/experiments/internal_preliminary_semantic_bim_runs.md` | Internal preliminary experiments and feasibility evidence |
-| `docs/methodology/validation_gates.md` | Methodology for the public validation gates |
+| [sample20_public_records.jsonl](sample20/sample20_public_records.jsonl) | Sanitized public sample records |
+| [schema_minimal.json](sample20/schema_minimal.json) | Minimal public contract for replay checks |
+| [replay.py](harness/replay.py) | Public replay entrypoint |
+| [schema_validator.py](harness/schema_validator.py) | Basic JSONL schema inspection helper |
+| [smoke20_metrics_table.md](benchmark/metrics/smoke20_metrics_table.md) | Smoke run metrics table |
+| [smoke20_research_summary.json](benchmark/metrics/smoke20_research_summary.json) | JSON summary of the smoke run |
+| [semantic_bim_output_schema.json](benchmark/schema/semantic_bim_output_schema.json) | Semantic target schema definition |
+| [public_forbidden_scan.py](scripts/public_forbidden_scan.py) | Public forbidden scan checker script |
+| [schema_contract_map.md](docs/methodology/schema_contract_map.md) | Schema contract layers map |
+| [results_sample20.md](benchmark/results_sample20.md) | Executed public sample validation results |
+| [internal_preliminary_semantic_bim_runs.md](docs/experiments/internal_preliminary_semantic_bim_runs.md) | Internal preliminary experiments and feasibility evidence |
+| [validation_gates.md](docs/methodology/validation_gates.md) | Methodology for the public validation gates |
 
 ## sample20
 
@@ -146,6 +151,13 @@ See [QUICKSTART.md](QUICKSTART.md) for the minimal local replay steps.
 
 Current public validation status: `RESEARCH_PASS`.
 
+The validation checks can be run locally using the following commands:
+```powershell
+python harness/replay.py --sample sample20/
+python harness/schema_validator.py sample20/sample20_public_records.jsonl
+python scripts/public_forbidden_scan.py
+```
+
 The public replay and evidence summary are documented in `PUBLIC_EVIDENCE.md` and `benchmark/results_sample20.md`.
 
 Internal preliminary experiments are summarized in [`docs/experiments/internal_preliminary_semantic_bim_runs.md`](docs/experiments/internal_preliminary_semantic_bim_runs.md). These runs are feasibility evidence only and are not final A1 benchmark results.
@@ -164,13 +176,14 @@ Internal preliminary experiments are summarized in [`docs/experiments/internal_p
 
 ## Methodology Docs
 
-- `docs/methodology/validation_gates.md`
-- `docs/methodology/xai_evaluation_position.md`
-- `docs/methodology/dataset_construction_and_training_readiness.md`
-- `docs/methodology/semantic_bim_compilation_task.md`
-- `docs/methodology/xai_evidence_positioning.md`
-- `docs/methodology/dataset_scope_a1_advanced_computing.md`
-- `docs/public_boundary.md`
+- [validation_gates.md](docs/methodology/validation_gates.md)
+- [xai_evaluation_position.md](docs/methodology/xai_evaluation_position.md)
+- [dataset_construction_and_training_readiness.md](docs/methodology/dataset_construction_and_training_readiness.md)
+- [semantic_bim_compilation_task.md](docs/methodology/semantic_bim_compilation_task.md)
+- [xai_evidence_positioning.md](docs/methodology/xai_evidence_positioning.md)
+- [dataset_scope_a1_advanced_computing.md](docs/methodology/dataset_scope_a1_advanced_computing.md)
+- [schema_contract_map.md](docs/methodology/schema_contract_map.md)
+- [public_boundary.md](docs/public_boundary.md)
 
 ## Evidence Trace Diagram
 

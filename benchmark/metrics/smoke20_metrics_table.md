@@ -1,5 +1,7 @@
 # Benchmark Metrics - sample20 smoke run
 
+These metrics are replay consistency metrics over a tiny public reproducibility sample. They are not general model performance metrics and are not final A1 benchmark results.
+
 ## Sample: smoke20 replay over sample20 (n=20)
 
 | Metric | Value |
@@ -16,9 +18,12 @@
 | Required Relationships Recall | 1.0 |
 | Hallucinated IFC Class Count | 0 |
 | Non-Actionable IFC Class Count | 2 |
-| Hard Block Count | 4 |
+| Human Review / Non-executable Preview Count | 4 |
 | Processed Count | 20 |
 | Error Count | 0 |
+
+> [!NOTE]
+> This public metric refers to records that require human review or remain non-executable previews. It is not a user-facing hard-block policy.
 
 ## Status: RESEARCH_PASS
 

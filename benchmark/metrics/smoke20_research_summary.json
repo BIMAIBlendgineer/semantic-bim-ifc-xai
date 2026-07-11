@@ -15,7 +15,7 @@
   "required_relationships_recall": 1.0,
   "hallucinated_ifc_class_count": 0,
   "non_actionable_ifc_class_count": 2,
-  "hard_block_count": 4,
-  "hard_block_interpretation": "conservative governance state in the experimental Semantic BIM contract",
+  "human_review_or_non_executable_preview_count": 4,
+  "preview_state_interpretation": "conservative governance state in the experimental Semantic BIM contract",
   "deployment_policy_gate": "out_of_scope_for_this_academic_artifact"
 }

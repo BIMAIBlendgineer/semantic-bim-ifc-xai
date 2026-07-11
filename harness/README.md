@@ -1,24 +1,18 @@
-# Harness
+# harness
 
-The public harness is a lightweight replay and validation layer.
+## Purpose
+The public harness is a lightweight replay and validation layer for testing record serialization, minimal schemas, and consistency checks on the public reproducibility sample.
 
-It does not run a model.
+## Contents
+- `replay.py`: The public replay execution script.
+- `schema_validator.py`: A Python-only schema validation helper for public JSONL records.
+- `replay_harness.py`: Additional harness utility function support.
 
-## replay.py
+## What this folder does not contain
+- It does not contain private datasets or model checkpoints.
+- It does not contain a full BIM validator, model server, or certified IFC checker.
+- It does not represent a production/certification tool.
 
-- Entry point: `python harness/replay.py --sample sample20/`
-- Input: `sample20/` or a direct JSONL path.
-- Output: record count, JSON parse status, schema status, replay status, and a final `REPLAY_OK` or `REPLAY_FAIL`.
-
-## What It Does
-
-- Reads the public JSONL sample.
-- Resolves `sample20/` to the canonical public file.
-- Validates the minimal public contract.
-- Reports a deterministic public replay summary.
-
-## Limits
-
-- It is not a model server.
-- It is not a production BIM validator.
-- It only checks the public sample surface.
+## Related files
+- `sample20/sample20_public_records.jsonl`: The target public dataset for replay.
+- `sample20/schema_minimal.json`: The minimal schema validated by the harness.
