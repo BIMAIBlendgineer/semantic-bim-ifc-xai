@@ -1,0 +1,7 @@
+﻿
+# Python / local runtime artifacts
+__pycache__/
+*.pyc
+
+# Hugging Face public harness generated previews
+spaces/huggingface_harness/temp_models/
