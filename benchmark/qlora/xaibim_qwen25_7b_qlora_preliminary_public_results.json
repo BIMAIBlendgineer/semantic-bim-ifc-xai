@@ -1,0 +1,182 @@
+{
+  "artifact_type": "preliminary_aggregate_experiment_report",
+  "artifact_version": "1.0",
+  "title": "Preliminary QLoRA Computational Feasibility Run for Evidence-Grounded Semantic BIM/IFC Outputs",
+  "kaggle_notebook_url": "https://www.kaggle.com/code/xaibim/semantic-bim-ifc-xai",
+  "scope": {
+    "purpose": "Demonstrate that a bounded QLoRA workflow can be executed and measured on commodity GPU infrastructure.",
+    "not_claimed": [
+      "final benchmark performance",
+      "generalization across AECO tasks",
+      "production readiness",
+      "certified BIM or IFC compliance",
+      "statistical significance"
+    ]
+  },
+  "data": {
+    "dataset_visibility": "private controlled synthetic pilot dataset",
+    "record_count": 1000,
+    "dataset_sha256": "16c9b8b03a6dc897557183ac1457dfb00c9c4b36183a813d26f21b477de3fd12",
+    "split_strategy": "semantic_signature_grouped_deterministic_v2_1",
+    "train_records": 800,
+    "validation_records": 100,
+    "test_records": 100,
+    "train_families": 84,
+    "validation_families": 9,
+    "test_families": 7,
+    "legacy_normalized_records": 113
+  },
+  "model_and_training": {
+    "base_model": "unsloth/Qwen2.5-7B-Instruct-bnb-4bit",
+    "method": "QLoRA",
+    "epochs": 1,
+    "seed": 3407,
+    "lora_rank": 16,
+    "lora_alpha": 16,
+    "lora_dropout": 0,
+    "learning_rate": 0.0002,
+    "effective_batch_size": 4,
+    "adapter_sha256": "682a9dc9fc1719f8cff9bcc113eecac7f2b6aba9336f79838f0d0e6168c52392",
+    "adapter_size_bytes": 161533192,
+    "adapter_publicly_released": false
+  },
+  "compute": {
+    "allocated_gpu_count": 2,
+    "allocated_gpu_names": [
+      "Tesla T4",
+      "Tesla T4"
+    ],
+    "effective_gpu_count": 1,
+    "training_runtime_seconds": 3890.2480099201202,
+    "training_peak_allocated_vram_gb": 6.628742218017578,
+    "training_peak_reserved_vram_gb": 7.490234375,
+    "training_samples_per_second": 0.206,
+    "training_steps_per_second": 0.051,
+    "training_loss": 0.07460793347796425,
+    "measured_end_to_end_runtime_seconds": 7598.515273094177,
+    "effective_gpu_hours": 2.1106986869706046,
+    "allocated_gpu_hours": 4.221397373941209,
+    "validation_loss": null
+  },
+  "derived_calculations": {
+    "training_runtime_hours": 1.0806244472000335,
+    "end_to_end_runtime_hours": 2.1106986869706046,
+    "non_training_overhead_seconds": 3708.267263174057,
+    "non_training_overhead_hours": 1.0300742397705713,
+    "effective_gpu_hours_recomputed": 2.1106986869706046,
+    "allocated_gpu_hours_recomputed": 4.221397373941209,
+    "expected_optimizer_steps": 200,
+    "adapter_size_mib": 154.05005645751953,
+    "training_runtime_share_percent": 51.19747569232666,
+    "non_training_runtime_share_percent": 48.80252430767334
+  },
+  "calculation_methodology": {
+    "training_runtime_hours": "training_runtime_seconds / 3600",
+    "end_to_end_runtime_hours": "measured_end_to_end_runtime_seconds / 3600",
+    "non_training_overhead_seconds": "measured_end_to_end_runtime_seconds - training_runtime_seconds",
+    "non_training_overhead_hours": "non_training_overhead_seconds / 3600",
+    "effective_gpu_hours_recomputed": "end_to_end_runtime_hours * effective_gpu_count",
+    "allocated_gpu_hours_recomputed": "end_to_end_runtime_hours * allocated_gpu_count",
+    "expected_optimizer_steps": "train_records / effective_batch_size * epochs (derived expected count)",
+    "adapter_size_mib": "adapter_size_bytes / 1048576",
+    "training_runtime_share_percent": "training_runtime_seconds / measured_end_to_end_runtime_seconds * 100",
+    "non_training_runtime_share_percent": "non_training_overhead_seconds / measured_end_to_end_runtime_seconds * 100"
+  },
+  "corrected_held_out_results": {
+    "evaluator_correction_note": "The original evaluator treated evidence_trace as a list. The dataset contract uses an object. Metrics below were recomputed from stored predictions using the object-based contract. No retraining was required.",
+    "baseline": {
+      "record_count": 100,
+      "json_parse_rate": 1.0,
+      "strict_schema_valid_rate": 0.0,
+      "intent_class_agreement": 0.0,
+      "semantic_type_agreement": 0.08,
+      "ifc_class_agreement": 0.4,
+      "value_mode_agreement": 0.67,
+      "recovery_needed_agreement": 0.02,
+      "missing_f1": 0.0,
+      "required_psets_f1": 0.7466666666666667,
+      "required_relationships_f1": 0.0,
+      "ambiguity_flags_f1": 0.76,
+      "reason_codes_f1": 0.0,
+      "evidence_trace_exact_match": 0.0,
+      "evidence_trace_field_f1": 0.0
+    },
+    "adapter": {
+      "record_count": 100,
+      "json_parse_rate": 1.0,
+      "strict_schema_valid_rate": 1.0,
+      "intent_class_agreement": 1.0,
+      "semantic_type_agreement": 1.0,
+      "ifc_class_agreement": 1.0,
+      "value_mode_agreement": 1.0,
+      "recovery_needed_agreement": 1.0,
+      "missing_f1": 1.0,
+      "required_psets_f1": 0.7867619047619048,
+      "required_relationships_f1": 0.76,
+      "ambiguity_flags_f1": 1.0,
+      "reason_codes_f1": 1.0,
+      "evidence_trace_exact_match": 0.86,
+      "evidence_trace_field_f1": 0.98
+    },
+    "intent_class_note": "Intent-class agreement is not representative because all 100 test records use the same intent label, unknown_edge.",
+    "test_distribution": {
+      "intent_class": {
+        "unknown_edge": 100
+      },
+      "semantic_type": {
+        "element_creation": 1,
+        "element_deletion": 2,
+        "normative_inspection": 38,
+        "property_completion": 8,
+        "pset_assignment": 8,
+        "safe_preview": 25,
+        "semantic_enrichment": 18
+      },
+      "ifc_class": {
+        "IfcAirTerminal": 38,
+        "IfcAsset": 17,
+        "IfcDuctSegment": 25,
+        "IfcSpace": 20
+      },
+      "value_mode": {
+        "GUIDED_RECOVERY": 2,
+        "PREVIEW": 81,
+        "PROPOSAL": 17
+      }
+    },
+    "interpretation": "The adapter showed strong controlled held-out target agreement on this bounded experiment. Computational feasibility was demonstrated. The result remains preliminary: the test set contains seven semantic families, four IFC classes, and a single intent label. No broad generalization is established. No statistical significance is claimed."
+  },
+  "limitations": [
+    "Single run and single random seed.",
+    "One model size and one training epoch.",
+    "The held-out test contains seven semantic families.",
+    "All 100 test records use the intent label unknown_edge.",
+    "The test covers four IFC classes.",
+    "Validation loss was not recorded in the original run.",
+    "Private predictions and adapter weights are excluded from this public artifact.",
+    "The results are target-agreement measurements, not evidence of broad AECO generalization.",
+    "No statistical significance claim is made."
+  ],
+  "public_boundary": {
+    "included": [
+      "aggregate metrics",
+      "compute measurements",
+      "formulas and derived calculations",
+      "model and hyperparameter identifiers",
+      "dataset and adapter hashes",
+      "test distribution",
+      "methodological limitations",
+      "Kaggle notebook link"
+    ],
+    "excluded": [
+      "dataset rows",
+      "raw prompts",
+      "expected outputs",
+      "raw model predictions",
+      "adapter weights",
+      "checkpoint files",
+      "private ZIP files",
+      "private project data"
+    ]
+  }
+}

@@ -2,15 +2,24 @@
 
 ## Status
 
-This document summarizes internal preliminary experiments used to test whether the semantic BIM/IFC compilation protocol is technically measurable.
+This document summarizes internal preliminary experiments used to test whether
+the semantic BIM/IFC compilation protocol is technically measurable.
 
-The underlying internal report files are not part of this public release. The values below are aggregate internal feasibility indicators. They are included to document motivation and scope, not to provide an independently reproducible public benchmark.
+The underlying internal report files are not part of this public release. The
+values below are aggregate internal feasibility indicators. They are included
+to document motivation and scope, not to provide an independently reproducible
+public benchmark.
 
-These experiments are internal preliminary experiments and are not final A1 benchmark results, trained model claims or production readiness evidence. They are feasibility evidence for the proposed benchmark workflow.
+These experiments are internal preliminary experiments. They are feasibility
+evidence for the proposed benchmark workflow. They do not establish a final
+benchmark result, claim production readiness, or certify BIM/IFC compliance.
 
 ## Research task
 
-The experiments follow the same positioning: BIM 3D/IFC is the technical object, semantic compilation is the computational task, traceability/evidence is the XAI criterion, the chat interface is the user-facing surface, and the benchmark is the evaluation method.
+The experiments follow the same positioning: BIM 3D/IFC is the technical
+object, semantic compilation is the computational task, traceability/evidence
+is the XAI criterion, the chat interface is the user-facing surface, and the
+benchmark is the evaluation method.
 
 The experiments evaluate a structured task:
 
@@ -18,21 +27,26 @@ The experiments evaluate a structured task:
 natural-language BIM request
 + structured BIM/runtime context
 + safety and evidence constraints
-        ↓
+        →
 IFC-aware semantic JSON record
-        ↓
+        →
 schema validation
-        ↓
+        →
 field-level comparison
-        ↓
+        →
 evidence and replay checks
 ```
 
-The target is not a generic BIM chatbot. The target is a prompt-to-IFC contract model that can produce structured records suitable for validation and benchmark comparison.
+The target is not a generic BIM chatbot. The target is a prompt-to-IFC contract
+model that can produce structured records suitable for validation and benchmark
+comparison.
 
 ## Smoke20 diagnostic run
 
-The smoke20 run is a diagnostic smoke test. It demonstrates that the evaluation pipeline can validate JSON, schema conformance, IFC class mapping and evidence trace completeness, while also exposing weaknesses in intent classification, missing-field handling and Pset recall.
+The smoke20 run is a diagnostic smoke test. It demonstrates that the evaluation
+pipeline can validate JSON, schema conformance, IFC class mapping and evidence
+trace completeness, while also exposing weaknesses in intent classification,
+missing-field handling and Pset recall.
 
 | Metric | Preliminary value |
 | --- | ---: |
@@ -48,11 +62,14 @@ The smoke20 run is a diagnostic smoke test. It demonstrates that the evaluation 
 | relationship_recall | 1.0 |
 | latency_average_ms | 9265.93 |
 
-Interpretation: this smoke test should not be read as a performance claim. Its value is methodological: it confirms that the harness can both detect valid structured outputs and expose measurable failure modes.
+Interpretation: this smoke test should not be read as a performance claim. Its
+value is methodological: it confirms that the harness can both detect valid
+structured outputs and expose measurable failure modes.
 
 ## V4 5k preliminary run
 
-A larger internal preliminary run was used to test the same protocol at a higher scale.
+A larger internal preliminary run was used to test the same protocol at a
+higher scale.
 
 | Metric | Preliminary value |
 | --- | ---: |
@@ -70,7 +87,26 @@ A larger internal preliminary run was used to test the same protocol at a higher
 | latency_median_ms | 8992.93 |
 | latency_p95_ms | 11144.58 |
 
-Interpretation: this run indicates that the protocol can be executed at larger preliminary scale. It does not replace a controlled public benchmark and should not be reported as a final A1 result.
+Interpretation: this run indicates that the protocol can be executed at larger
+preliminary scale. It does not replace a controlled public benchmark.
+
+## Preliminary QLoRA adaptation experiment
+
+A private preliminary QLoRA adapter was trained in a bounded run on a private
+controlled synthetic pilot dataset of 1,000 records.
+
+- Adapter weights remain private and are not publicly released.
+- Sanitized aggregate evidence (metrics, compute measurements, formulas) is
+  published at [`benchmark/qlora/`](../../benchmark/qlora/).
+- The result is preliminary: single run, single seed, one epoch, seven
+  held-out semantic families.
+- No broad AECO generalization is established.
+- No production readiness is claimed.
+- No final benchmark conclusion is drawn.
+
+The adapter is not presented as a public artifact or product.
+
+Public notebook: <https://www.kaggle.com/code/xaibim/semantic-bim-ifc-xai>
 
 ## What these experiments demonstrate
 
@@ -85,20 +121,23 @@ The preliminary runs show that the proposed protocol can measure:
 * IFC relationship recall;
 * missing-field handling;
 * evidence trace completeness;
-* latency.
+* latency;
+* GPU resource consumption and training feasibility.
 
 ## What these experiments do not claim
 
 These runs do not claim that:
 
-- a complete corpus already exists;
-- the final A1 dataset has already been produced;
-- the model is trained;
-- an adapter is ready;
-- the benchmark is final;
+- a complete public corpus already exists;
+- a final benchmark has been produced;
 - the system is production ready;
-- the repository is a certified BIM or regulatory checker.
+- the repository is a certified BIM or regulatory checker;
+- the adapter generalizes broadly to unseen AECO tasks;
+- the results carry statistical significance.
 
-## Relation to the proposed A1 work
+## Relation to future work
 
-The public repository currently provides a minimal reproducibility sample and replayable validation protocol. The A1 work is expected to scale this into a curated synthetic/controlled dataset, systematic benchmark, error analysis and lightweight adaptation experiment under documented computational conditions.
+The public repository provides a minimal reproducibility sample and replayable
+validation protocol. A systematic benchmark, a broader public dataset, and
+further adaptation experiments remain future work. These preliminary
+experiments are starting evidence for a controlled research workflow.
