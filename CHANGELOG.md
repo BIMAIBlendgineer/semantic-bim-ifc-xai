@@ -11,7 +11,7 @@
 - Updated Hugging Face harness wording to align with IFC-aware semantic contract, evidence trace and validation/replay.
 - Added `.gitignore` coverage for generated harness preview models.
 - Confirmed that no private datasets, checkpoints, adapters or secrets are included.
-- This release does not introduce a complete corpus, trained model, production system, certification tool or final A1 benchmark.
+- This release does not introduce a complete corpus, trained model, production system, certification tool or final benchmark.
 
 ## v0.1-public-sample20 - public sample snapshot
 

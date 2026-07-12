@@ -13,6 +13,7 @@ The boundary exists to keep the repository reproducible, sanitized, and narrow e
 | Sanitized dataset | `sample20` | `sample20/` |
 | Replay harness | Public validation entrypoint | `harness/` |
 | Benchmark sample results | Executed sample20 replay results | `benchmark/results_sample20.md` |
+| Preliminary QLoRA evidence | Aggregate metrics, compute, distributions | `benchmark/qlora/` |
 | Public evidence | Validation status and checks | `PUBLIC_EVIDENCE.md` |
 | Methodology docs | Public validation and boundary notes | `docs/methodology/` |
 | Hugging Face links | Public demo references | `README.md` |
@@ -24,6 +25,9 @@ The boundary exists to keep the repository reproducible, sanitized, and narrow e
 | Private pilot datasets | Not part of the public artifact |
 | Private high-fidelity datasets | Not part of the public artifact |
 | Fine-tuned adapter weights | Not included in the public repo |
+| Raw model predictions | Not included in the public repo |
+| Checkpoint files | Not included in the public repo |
+| Private ZIP archives | Not included in the public repo |
 | Production inference infrastructure | Not included in the public repo |
 | Private commercial or project data | Not included in the public repo |
 | Raw user feedback events | Not included in the public repo |

@@ -6,7 +6,7 @@ This repository is an academic research artifact for public sample validation, t
 
 This is an academic research artifact. It is not a certification tool, production BIM service, or institutional endorsement. It contains only public synthetic or sanitized examples.
 
-The badge validates the public sanitized `sample20` replay, minimal public schema contract, forbidden-pattern scan and public Hugging Face harness self-test. It is not a certification, production readiness claim or final A1 benchmark.
+The badge validates the public sanitized `sample20` replay, minimal public schema contract, forbidden-pattern scan and public Hugging Face harness self-test. It is not a certification, production readiness claim, or final benchmark.
 
 ## What this project studies
 
@@ -100,6 +100,7 @@ This is closer to provenance, evidence traceability and structured auditability 
 - `sample20/`: the public sanitized sample dataset and its local manifest.
 - `harness/`: a lightweight replay and validation harness.
 - `benchmark/`: public sample validation results and benchmark notes.
+- `benchmark/qlora/`: sanitized aggregate evidence from the preliminary QLoRA experiment.
 - `PUBLIC_EVIDENCE.md`: public validation status and executable checks.
 - `docs/public_boundary.md`: the public/private boundary map.
 - `QUICKSTART.md`: minimal reproduction steps.
@@ -112,6 +113,7 @@ This is closer to provenance, evidence traceability and structured auditability 
 | reproduce replay | `QUICKSTART.md` |
 | validation evidence | `PUBLIC_EVIDENCE.md` |
 | benchmark sample results | `benchmark/results_sample20.md` |
+| preliminary QLoRA evidence | `benchmark/qlora/` |
 | public/private boundary | `docs/public_boundary.md` |
 
 ## Public Artifacts
@@ -130,6 +132,9 @@ This is closer to provenance, evidence traceability and structured auditability 
 | [results_sample20.md](benchmark/results_sample20.md) | Executed public sample validation results |
 | [internal_preliminary_semantic_bim_runs.md](docs/experiments/internal_preliminary_semantic_bim_runs.md) | Internal preliminary experiments and feasibility evidence |
 | [validation_gates.md](docs/methodology/validation_gates.md) | Methodology for the public validation gates |
+| [XAIBIM_QWEN25_7B_QLORA_PRELIMINARY_RESULTS.md](benchmark/qlora/XAIBIM_QWEN25_7B_QLORA_PRELIMINARY_RESULTS.md) | Preliminary QLoRA experiment report |
+| [xaibim_qwen25_7b_qlora_preliminary_public_results.json](benchmark/qlora/xaibim_qwen25_7b_qlora_preliminary_public_results.json) | Machine-readable aggregate QLoRA results |
+| [verify_qlora_public_metrics.py](scripts/verify_qlora_public_metrics.py) | Deterministic QLoRA metrics verifier |
 
 ## sample20
 
@@ -166,7 +171,7 @@ The Hugging Face harness dependencies are isolated in spaces/huggingface_harness
 
 The public replay and evidence summary are documented in `PUBLIC_EVIDENCE.md` and `benchmark/results_sample20.md`.
 
-Internal preliminary experiments are summarized in [`docs/experiments/internal_preliminary_semantic_bim_runs.md`](docs/experiments/internal_preliminary_semantic_bim_runs.md). These runs are feasibility evidence only and are not final A1 benchmark results.
+Internal preliminary experiments are summarized in [`docs/experiments/internal_preliminary_semantic_bim_runs.md`](docs/experiments/internal_preliminary_semantic_bim_runs.md). These runs are feasibility evidence only and do not constitute a final benchmark.
 
 ## What Is Not Claimed
 
@@ -180,6 +185,33 @@ Internal preliminary experiments are summarized in [`docs/experiments/internal_p
 - Public replay space: https://huggingface.co/spaces/bimaiblend/semantic-xaibim-replay
 - Public harness space: https://huggingface.co/spaces/bimaiblend/semantic-xaibim-harness
 
+## Preliminary QLoRA Computational Feasibility Experiment
+
+A public Kaggle notebook documents a bounded Qwen2.5-7B QLoRA experiment for
+structured, evidence-grounded Semantic BIM/IFC outputs.
+
+The experiment provides:
+
+- measured training runtime and GPU utilization;
+- peak VRAM consumption;
+- effective and allocated GPU-hours;
+- aggregate base-model and adapter comparisons;
+- corrected schema and evidence-trace evaluation;
+- explicit methodological and generalization limitations.
+
+This is a preliminary computational feasibility experiment. It is not a final
+benchmark, a production-readiness assessment, or evidence of broad AECO
+generalization.
+
+Kaggle: <https://www.kaggle.com/code/xaibim/semantic-bim-ifc-xai>
+
+See [`benchmark/qlora/`](benchmark/qlora/) for the full report, JSON results,
+and the deterministic [verification script](scripts/verify_qlora_public_metrics.py).
+
+```bash
+python scripts/verify_qlora_public_metrics.py
+```
+
 ## Methodology Docs
 
 - [validation_gates.md](docs/methodology/validation_gates.md)
@@ -187,7 +219,7 @@ Internal preliminary experiments are summarized in [`docs/experiments/internal_p
 - [dataset_construction_and_training_readiness.md](docs/methodology/dataset_construction_and_training_readiness.md)
 - [semantic_bim_compilation_task.md](docs/methodology/semantic_bim_compilation_task.md)
 - [xai_evidence_positioning.md](docs/methodology/xai_evidence_positioning.md)
-- [dataset_scope_a1_advanced_computing.md](docs/methodology/dataset_scope_a1_advanced_computing.md)
+- [dataset_scope_and_compute_scaling.md](docs/methodology/dataset_scope_and_compute_scaling.md)
 - [schema_contract_map.md](docs/methodology/schema_contract_map.md)
 - [public_boundary.md](docs/public_boundary.md)
 

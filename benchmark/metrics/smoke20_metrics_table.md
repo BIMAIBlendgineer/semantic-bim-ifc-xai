@@ -1,6 +1,6 @@
 # Benchmark Metrics - sample20 smoke run
 
-These metrics are replay consistency metrics over a tiny public reproducibility sample. They are not general model performance metrics and are not final A1 benchmark results.
+These metrics are replay consistency metrics over a tiny public reproducibility sample. They are not general model performance metrics and are not final benchmark results.
 
 ## Sample: smoke20 replay over sample20 (n=20)
 
@@ -28,4 +28,4 @@ These metrics are replay consistency metrics over a tiny public reproducibility 
 ## Status: RESEARCH_PASS
 
 These are public sample validation metrics for the smoke20 replay run over sample20.
-They are not the final A1 benchmark.
+They are not the final benchmark.

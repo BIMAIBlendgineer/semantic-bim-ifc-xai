@@ -52,7 +52,7 @@ python spaces/huggingface_harness/app.py --self-test
 * This release does not include a complete corpus.
 * This release does not include model training.
 * This release does not publish private datasets, model weights, adapters, checkpoints, credentials or internal logs.
-* This release does not claim certification, production readiness or final A1 benchmark results.
+* This release does not claim certification, production readiness or final benchmark results.
 * The public explainability claim remains evidence-grounded traceability, not full mathematical attribution.
 
 ## Relation to v0.1-public-sample20

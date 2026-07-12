@@ -8,7 +8,7 @@ This folder holds metrics tables and summaries generated during public sample re
 - `smoke20_research_summary.json`: Machine-readable version of the public smoke validation summary.
 
 ## What this folder does not contain
-- It does not contain final A1 benchmark datasets or results.
+- It does not contain final benchmark datasets or results.
 - It does not contain general model performance metrics or leaderboard evaluations.
 - It does not claim production readiness or final certification.
 

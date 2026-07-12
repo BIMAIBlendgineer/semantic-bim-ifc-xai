@@ -1,8 +1,8 @@
 # Public Sample20 Results
 
-These are public sample validation results, not the final A1 benchmark.
+These are public sample validation results, not the final benchmark.
 
-Note: these results refer only to the public `sample20` reproducibility sample. They should not be interpreted as final benchmark results for the larger A1-style experimental dataset.
+Note: these results refer only to the public `sample20` reproducibility sample. They should not be interpreted as final benchmark results for the larger broader experimental dataset.
 
 ## Executed Replay
 

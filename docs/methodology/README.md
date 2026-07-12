@@ -5,7 +5,7 @@ This folder explains the methodologies behind the validation gates, dataset cons
 
 ## Contents
 - `validation_gates.md`: The criteria used to qualify records.
-- `dataset_scope_a1_advanced_computing.md`: Explanation of the planned advanced computing dataset.
+- `dataset_scope_and_compute_scaling.md`: Explanation of the dataset scope, private pilot, preliminary QLoRA experiment, and compute scaling.
 - `dataset_construction_and_training_readiness.md`: How datasets are structured and prepared.
 - `semantic_bim_compilation_task.md`: Overview of the prompt-to-IFC compilation task.
 - `xai_evaluation_position.md` / `xai_evidence_positioning.md`: Positions explaining the evidence trace criteria.
@@ -17,3 +17,4 @@ This folder explains the methodologies behind the validation gates, dataset cons
 
 ## Related files
 - `docs/README.md`: The parent documentation index.
+- `benchmark/qlora/`: Sanitized aggregate evidence from the preliminary QLoRA experiment.
