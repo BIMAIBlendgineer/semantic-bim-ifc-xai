@@ -12,11 +12,10 @@
 | `MANIFEST.md` | This manifest |
 | `VALIDATION_SUMMARY.md` | Public validation summary |
 | `sample20_public_records.jsonl` | Sanitized public sample records |
-| `schema_minimal.json` | Minimal public contract for replay checks |
+| `schema_public_sample20_v2.json` | Strict public sample20 v2 contract (JSON Schema Draft 2020-12) |
 
 ## Notes
 
-- The public sample contains 20 records.
+- The public sample contains 20 records: 18 valid positive cases and 2 expected canonical rejections.
 - `smoke20` refers to the replay/validation run executed on `sample20`.
-- No private datasets, adapters, checkpoints, or secrets are included.
 

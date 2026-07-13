@@ -1,31 +1,36 @@
-# Benchmark Metrics - sample20 smoke run
+# Public sample20 v2 validation metrics
 
-These metrics are replay consistency metrics over a tiny public reproducibility sample. They are not general model performance metrics and are not final benchmark results.
+These metrics measure the consistency within the public sample20 v2 dataset. They show the agreement between stored model output and stored synthetic reference within this reduced sample. They are not representative of general model performance or generalization to unseen data.
 
-## Sample: smoke20 replay over sample20 (n=20)
+## Replay Metrics Summary (n=20)
 
-| Metric | Value |
-|--------|-------|
-| JSON Parse Rate | 1.0 |
-| Schema Valid Rate | 1.0 |
-| IFC Class Accuracy | 1.0 |
-| Semantic Type Accuracy | 1.0 |
-| Intent Class Accuracy | 1.0 |
-| Value Mode Accuracy | 1.0 |
-| Dimensions Accuracy | 1.0 |
-| Missing Fields Accuracy | 1.0 |
-| Required Psets Recall | 1.0 |
-| Required Relationships Recall | 1.0 |
-| Hallucinated IFC Class Count | 0 |
-| Non-Actionable IFC Class Count | 2 |
-| Human Review / Non-executable Preview Count | 4 |
-| Processed Count | 20 |
-| Error Count | 0 |
+| Metric | Value | Description |
+|--------|-------|-------------|
+| Record Count | 20 | Total records in public sample |
+| Unique Sample ID Count | 20 | Unique hexadecimal identifiers |
+| JSON Parse Rate | 1.0 | Compliance with JSON line parsing |
+| Public Schema Valid Rate | 1.0 | Compliance with Draft 2020-12 strict schema |
+| Canonical Validation Rate | 0.9 | Percentage of VALID cases (18/20) |
+| Valid Case Count | 18 | Number of positive test cases |
+| Expected Canonical Rejection Count | 2 | Number of negative test cases |
+| Expectation Met Rate | 1.0 | Rate at which model meets expectations (20/20) |
+| Public Value Mode Conformance Rate | 1.0 | Conformance to public value modes |
+| Legacy Blocking State Count | 0 | Count of legacy blocking state tokens |
+| Safe Next Action Rate | 1.0 | Rate of presence of actionable next-step guidance |
+| PREVIEW Mode Count | 6 | Records utilizing PREVIEW mode in model output |
+| PROPOSAL Mode Count | 5 | Records utilizing PROPOSAL mode in model output |
+| GUIDED_RECOVERY Mode Count | 9 | Records utilizing GUIDED_RECOVERY mode in model output |
+| EXECUTE Mode Count | 0 | Records utilizing EXECUTE mode in model output |
 
-> [!NOTE]
-> This public metric refers to records that require human review or remain non-executable previews. It is not a user-facing hard-block policy.
+## Agreement Metrics
 
-## Status: RESEARCH_PASS
+The agreement metrics describe the agreement between stored model output and stored synthetic reference within this reduced sample:
 
-These are public sample validation metrics for the smoke20 replay run over sample20.
-They are not the final benchmark.
+- IFC Class Agreement: 100% agreement
+- Semantic Type Agreement: 100% agreement
+- Intent Class Agreement: 100% agreement
+- Value Mode Agreement: 100% agreement
+- Dimensions Agreement: 100% agreement
+- Missing Inputs Agreement: 100% agreement
+
+## Package Status: `PUBLIC_SAMPLE_VALID_WITH_EXPECTED_NEGATIVES`

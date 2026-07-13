@@ -12,9 +12,9 @@ The explicit linkage between an output and IFC-related classes, properties or re
 
 A controlled task where a BIM-related prompt is converted into structured, auditable output.
 
-## RESEARCH_PASS
+## PUBLIC_SAMPLE_VALID_WITH_EXPECTED_NEGATIVES
 
-A public research status meaning that the artefact is acceptable as preliminary research evidence. It is not a product-readiness status.
+A public validation status indicating that the public sample20 dataset is structurally valid, conforms to the public schema v2, and passes replay validation including both positive and expected negative test cases.
 
 ## Conservative governance
 

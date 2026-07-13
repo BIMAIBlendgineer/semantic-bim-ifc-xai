@@ -27,19 +27,32 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          python -m pip install -r spaces/huggingface/requirements.txt
+          python -m pip install -r spaces/huggingface_harness/requirements.txt
+
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -p "test_*.py" -v
 
       - name: Replay public sample20
         run: python harness/replay.py --sample sample20/
 
       - name: Validate public sample20 schema
-        run: python harness/schema_validator.py sample20/sample20_public_records.jsonl
+        run: |
+          python harness/schema_validator.py \
+            sample20/sample20_public_records.jsonl \
+            --schema sample20/schema_public_sample20_v2.json
+
+      - name: Run public sample20 integrity check
+        run: python scripts/verify_public_sample20_integrity.py
 
       - name: Run public forbidden scan
         run: python scripts/public_forbidden_scan.py
 
-      - name: Install Hugging Face harness dependencies
-        run: |
-          python -m pip install -r spaces/huggingface_harness/requirements.txt
+      - name: Run QLoRA public metrics check
+        run: python scripts/verify_qlora_public_metrics.py
 
-      - name: Run Hugging Face harness self-test
+      - name: Run Hugging Face Replay Space self-test
+        run: python spaces/huggingface/app.py --self-test
+
+      - name: Run Hugging Face Harness Space self-test
         run: python spaces/huggingface_harness/app.py --self-test

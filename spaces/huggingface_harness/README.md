@@ -74,6 +74,23 @@ To test the **Start here** and **Find similar public sample** tabs, you can use 
 - **No live model inference**: matching is deterministic and resolved against the static 20-record database.
 - **No certified BIM decisions**: all outputs are labelled `PREVIEW` and must be audited by qualified engineers before any model insertion.
 - **No professional validation**: outputs are research previews only.
+- **No final benchmark or production deployment**: this is a research prototype only, not a product.
+
+---
+
+## Public Sample and Demo Note
+
+The interactive application in this folder conforms to the strict public sample20 v2 contract using JSON Schema Draft 2020-12 (defined in `schema_public_sample20_v2.json`).
+
+Expected metrics are:
+- **Record Count**: 20 records;
+- **Valid Cases**: 18 valid cases;
+- **Expected Rejections**: 2 expected canonical rejections;
+- **Canonical Validation Rate**: `canonical_validation_rate = 0.9`;
+- **Expectation Met Rate**: `expectation_met_rate = 1.0`;
+- **Status**: `status = PUBLIC_SAMPLE_VALID_WITH_EXPECTED_NEGATIVES`.
+
+All 1.0 metrics indicate internal agreement with the stored synthetic reference, not a final benchmark, production deployment, or certification. This is an academic research artifact, not a final benchmark, not a product, and does not claim production readiness or certification.
 
 ---
 

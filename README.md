@@ -121,7 +121,7 @@ This is closer to provenance, evidence traceability and structured auditability 
 | Artifact | Purpose |
 | --- | --- |
 | [sample20_public_records.jsonl](sample20/sample20_public_records.jsonl) | Sanitized public sample records |
-| [schema_minimal.json](sample20/schema_minimal.json) | Minimal public contract for replay checks |
+| [schema_public_sample20_v2.json](sample20/schema_public_sample20_v2.json) | Strict public sample20 v2 contract using JSON Schema Draft 2020-12 |
 | [replay.py](harness/replay.py) | Public replay entrypoint |
 | [schema_validator.py](harness/schema_validator.py) | Basic JSONL schema inspection helper |
 | [smoke20_metrics_table.md](benchmark/metrics/smoke20_metrics_table.md) | Smoke run metrics table |
@@ -154,7 +154,7 @@ See [QUICKSTART.md](QUICKSTART.md) for the minimal local replay steps.
 
 ## Validation Status
 
-Current public validation status: `RESEARCH_PASS`.
+Current public validation status: `PUBLIC_SAMPLE_VALID_WITH_EXPECTED_NEGATIVES`.
 
 The validation checks can be run locally using the following commands:
 ```powershell
@@ -222,6 +222,15 @@ python scripts/verify_qlora_public_metrics.py
 - [dataset_scope_and_compute_scaling.md](docs/methodology/dataset_scope_and_compute_scaling.md)
 - [schema_contract_map.md](docs/methodology/schema_contract_map.md)
 - [public_boundary.md](docs/public_boundary.md)
+
+## Dataset Structure and Metrics Wording
+
+The public `sample20` dataset contains 20 records: 18 valid cases and 2 expected canonical rejections.
+- The `canonical_validation_rate` is 0.9 (18/20) because the two expected negative cases are rejected as intended.
+- The `expectation_met_rate` is 1.0 (20/20) since the model's actual status matches the expected case expectation in all 20 records.
+- All 1.0 metrics indicate consistency within this reduced sample, not general model performance or generalization.
+- The `sample20` dataset is not a complete corpus and is not a final benchmark.
+- No private datasets, checkpoints, adapters or secrets are included.
 
 ## Evidence Trace Diagram
 

@@ -16,6 +16,6 @@ PR10 aligns the public executable checks with the **Public Record Envelope** to 
 
 | Layer | File/script | Purpose |
 |---|---|---|
-| Public record envelope | `sample20/schema_minimal.json`, `harness/schema_validator.py`, `harness/replay.py` | Validates public JSONL records used for reproducibility |
+| Public record envelope | `sample20/schema_public_sample20_v2.json`, `harness/schema_validator.py`, `harness/replay.py` | Validates public JSONL records under the strict public sample20 v2 contract using JSON Schema Draft 2020-12 |
 | Semantic output contract | `canonical_output` inside each record | Stores IFC-aware semantic output fields |
 | Demo JSON validation | `spaces/huggingface_harness/app.py` | UI helper for illustrative public demo; not the full sample20 validator |

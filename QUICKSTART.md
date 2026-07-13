@@ -31,15 +31,17 @@ python harness/replay.py --sample sample20/
 Expected output includes:
 
 * `records=20`
-* `json_parse=PASS`
+* `valid_cases=18`
+* `expected_rejections=2`
+* `expectation_met_rate=1.0`
 * `schema=PASS`
-* `replay=PASS`
-* `status=REPLAY_OK`
+* `integrity=PASS`
+* `status=PUBLIC_SAMPLE20_V2_VALID`
 
 ## 5. Run the public schema validator
 
 ```powershell
-python harness/schema_validator.py sample20/sample20_public_records.jsonl
+python harness/schema_validator.py sample20/sample20_public_records.jsonl --schema sample20/schema_public_sample20_v2.json
 ```
 
 Expected output includes:

@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+- Migrated public dataset to sample20 v2 format (schema_version = 2.0).
+- Replaced permissive schema with strict schema_public_sample20_v2.json (Draft 2020-12) enforcing additionalProperties: false.
+- Refactored harness replay and schema validator to utilize jsonschema and the new v2 schema.
+- Added scripts/verify_public_sample20_integrity.py to deterministically verify SHA-256 consistency and metrics across the dataset and spaces.
+- Updated public forbidden scan script with literal patterns and recursive JSON validation post-decoding.
+- Updated Hugging Face Spaces app.py to comply with v2 schema format, removing legacy/internal keys.
+- Removed invented values from Hugging Face Harness Space and improved recovery logic for unrecognized prompts.
+
 ## v0.1.1-public-validation - public validation cleanup
 
 - Strengthened the public `sample20` schema validator.
