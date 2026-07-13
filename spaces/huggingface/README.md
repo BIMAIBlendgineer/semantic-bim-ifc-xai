@@ -1,17 +1,6 @@
 ---
 title: Semantic XAIBIM Replay
-emoji: ðŸ§ 
-colorFrom: blue
-colorTo: indigo
-sdk: gradio
-app_file: app.py
-pinned: false
-short_description: Public replay demo for Semantic BIM/IFC structured outputs
-tags:
-  - bim
----
-title: Semantic XAIBIM Replay
-emoji: 🧠
+emoji: 🏗️
 colorFrom: blue
 colorTo: indigo
 sdk: gradio
