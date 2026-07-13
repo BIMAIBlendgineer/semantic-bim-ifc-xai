@@ -9,6 +9,14 @@ Current contents:
 - `metrics/smoke20_research_summary.json`
 - `schema/semantic_bim_output_schema.json`
 
-`smoke20` is the validation run over `sample20`, not a separate dataset.
+`smoke20` is the validation run over `sample20` under the strict public sample20 v2 contract using JSON Schema Draft 2020-12 (defined in `sample20/schema_public_sample20_v2.json`). It is not a separate dataset.
 
-The benchmark is preliminary and intentionally limited. It supports review and reproducibility, not exhaustive model ranking.
+The public validation expects:
+- **Record Count**: 20 records;
+- **Valid Cases**: 18 valid cases;
+- **Expected Rejections**: 2 expected canonical rejections;
+- **Canonical Validation Rate**: `canonical_validation_rate = 0.9`;
+- **Expectation Met Rate**: `expectation_met_rate = 1.0`;
+- **Status**: `status = PUBLIC_SAMPLE_VALID_WITH_EXPECTED_NEGATIVES`.
+
+All 1.0 metrics indicate internal agreement with the stored synthetic reference, not a final benchmark, production deployment, or certification. This is an academic research artifact, not a final benchmark, not a product, and does not claim production readiness or certification.

@@ -15,4 +15,4 @@ The public harness is a lightweight replay and validation layer for testing reco
 
 ## Related files
 - `sample20/sample20_public_records.jsonl`: The target public dataset for replay.
-- `sample20/schema_minimal.json`: The minimal schema validated by the harness.
+- `sample20/schema_public_sample20_v2.json`: The strict public sample20 v2 contract using JSON Schema Draft 2020-12.

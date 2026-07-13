@@ -10,8 +10,6 @@ Public evidence includes:
 - A conservative governance interpretation for unsupported or ambiguous cases.
 - A public normative text audit summary.
 
-Current public status:
+`PUBLIC_SAMPLE_VALID_WITH_EXPECTED_NEGATIVES`
 
-`RESEARCH_PASS`
-
-This status means preliminary research evidence, not product readiness.
+This status means the public sample is structurally valid and passes replay checks. It is not product readiness.

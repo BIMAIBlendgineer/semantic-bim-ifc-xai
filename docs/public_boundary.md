@@ -42,12 +42,23 @@ The public boundary is enforced by:
 2. Public pattern scans for forbidden private markers.
 3. Repository hygiene rules that exclude private artifacts.
 
-## Public Sample Note
+## Public Sample and Contract Note
 
-`sample20` is the public sanitized sample dataset. `smoke20` is the replay/validation run executed against `sample20`; it is not a separate dataset.
+`sample20` is the public sanitized sample dataset. Its schema is defined in `sample20/schema_public_sample20_v2.json` as the strict public sample20 v2 contract using JSON Schema Draft 2020-12.
+
+The public validation metrics are defined as:
+- **Record Count**: 20 records;
+- **Valid Cases**: 18 valid cases;
+- **Expected Rejections**: 2 expected canonical rejections;
+- **Canonical Validation Rate**: `canonical_validation_rate = 0.9` (since the 2 expected negatives are successfully rejected);
+- **Expectation Met Rate**: `expectation_met_rate = 1.0` (all 20 records match their case expectations);
+- **Status**: `status = PUBLIC_SAMPLE_VALID_WITH_EXPECTED_NEGATIVES`.
+
+All 1.0 metrics indicate internal agreement with the stored synthetic reference, not a final benchmark, production deployment, or certification.
 
 ## Disclaimer
 
 This is an academic research artifact.
 It is not a certification tool, production BIM service, or institutional endorsement.
 It contains only public synthetic or sanitized examples.
+It is not a final benchmark, not a product, and does not claim production readiness.

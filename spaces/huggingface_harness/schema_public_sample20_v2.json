@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/BIMAIBlendgineer/semantic-bim-ifc-xai/sample20/schema_public_sample20_v2.json",
+  "title": "Semantic BIM Public Sample20 Record v2",
+  "description": "Strict schema for the XAIBIM public sample20 v2. Records represent stored model/reference agreement, not live inference.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "sample_id",
+    "case_expectation",
+    "expectation_met",
+    "record_status",
+    "input_summary",
+    "model_output",
+    "reference_output",
+    "canonical_check",
+    "agreement",
+    "reference_scope"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "2.0"
+    },
+    "sample_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{16}$",
+      "description": "16 hex characters uniquely identifying this record."
+    },
+    "case_expectation": {
+      "type": "string",
+      "enum": ["VALID", "EXPECTED_CANONICAL_REJECTION"]
+    },
+    "expectation_met": {
+      "type": "boolean"
+    },
+    "record_status": {
+      "type": "string",
+      "enum": ["PASS", "EXPECTED_REJECTION_PASS"]
+    },
+    "reference_scope": {
+      "type": "string",
+      "const": "synthetic_target_not_normative_certification"
+    },
+    "input_summary": { "$ref": "#/$defs/input_summary" },
+    "model_output":  { "$ref": "#/$defs/output_block" },
+    "reference_output": { "$ref": "#/$defs/output_block" },
+    "canonical_check": { "$ref": "#/$defs/canonical_check" },
+    "agreement": { "$ref": "#/$defs/agreement" }
+  },
+  "if": {
+    "properties": { "case_expectation": { "const": "VALID" } },
+    "required": ["case_expectation"]
+  },
+  "then": {
+    "properties": {
+      "record_status": { "const": "PASS" },
+      "expectation_met": { "const": true },
+      "canonical_check": {
+        "properties": {
+          "ok": { "const": true },
+          "errors": { "maxItems": 0 }
+        },
+        "required": ["ok", "errors"]
+      }
+    }
+  },
+  "else": {
+    "properties": {
+      "record_status": { "const": "EXPECTED_REJECTION_PASS" },
+      "expectation_met": { "const": true },
+      "canonical_check": {
+        "properties": {
+          "ok": { "const": false },
+          "errors": { "minItems": 1 }
+        },
+        "required": ["ok", "errors"]
+      }
+    }
+  },
+  "$defs": {
+    "value_mode": {
+      "type": "string",
+      "enum": ["EXECUTE", "PREVIEW", "PROPOSAL", "GUIDED_RECOVERY"],
+      "description": "Public governance mode. Null is not permitted."
+    },
+    "input_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "discipline",
+        "major_ifc_class_group",
+        "semantic_type",
+        "ambiguity_flags",
+        "missing_inputs",
+        "recovery_type"
+      ],
+      "properties": {
+        "discipline":           { "type": ["string", "null"] },
+        "major_ifc_class_group":{ "type": ["string", "null"] },
+        "semantic_type":        { "type": ["string", "null"] },
+        "ambiguity_flags":      { "type": "array", "items": { "type": "string" } },
+        "missing_inputs":       { "type": "array", "items": { "type": "string" } },
+        "recovery_type":        { "type": ["string", "null"] }
+      }
+    },
+    "output_block": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "intent_class",
+        "semantic_type",
+        "ifc_class",
+        "value_mode",
+        "normalized_dimensions_m",
+        "required_psets",
+        "required_relationships",
+        "missing_inputs",
+        "ambiguity_flags",
+        "recovery_needed",
+        "recovery_type",
+        "safe_next_action",
+        "reason_codes",
+        "evidence_trace"
+      ],
+      "properties": {
+        "intent_class":             { "type": ["string", "null"] },
+        "semantic_type":            { "type": ["string", "null"] },
+        "ifc_class":                { "type": ["string", "null"] },
+        "value_mode":               { "$ref": "#/$defs/value_mode" },
+        "normalized_dimensions_m":  { "type": ["object", "null"], "additionalProperties": { "type": "number" } },
+        "required_psets":           { "type": "array", "items": { "type": "string" } },
+        "required_relationships":   { "type": "array", "items": { "type": "string" } },
+        "missing_inputs":           { "type": "array", "items": { "type": "string" } },
+        "ambiguity_flags":          { "type": "array", "items": { "type": "string" } },
+        "recovery_needed":          { "type": "boolean" },
+        "recovery_type":            { "type": ["string", "null"] },
+        "safe_next_action": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Non-empty human-readable guidance."
+        },
+        "reason_codes":   { "type": "array", "items": { "type": "string" } },
+        "evidence_trace": { "$ref": "#/$defs/evidence_trace" }
+      }
+    },
+    "canonical_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ok", "ifc_class", "value_mode", "errors", "warnings"],
+      "properties": {
+        "ok":        { "type": "boolean" },
+        "ifc_class": { "type": ["string", "null"] },
+        "value_mode":{ "$ref": "#/$defs/value_mode" },
+        "errors":    { "type": "array", "items": { "type": "string" } },
+        "warnings":  { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "agreement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ifc_class",
+        "semantic_type",
+        "intent_class",
+        "value_mode",
+        "dimensions",
+        "missing_inputs",
+        "required_psets_recall",
+        "required_relationships_recall"
+      ],
+      "properties": {
+        "ifc_class":                      { "type": "boolean" },
+        "semantic_type":                  { "type": "boolean" },
+        "intent_class":                   { "type": "boolean" },
+        "value_mode":                     { "type": "boolean" },
+        "dimensions":                     { "type": "boolean" },
+        "missing_inputs":                 { "type": "boolean" },
+        "required_psets_recall":          { "type": "number", "minimum": 0, "maximum": 1 },
+        "required_relationships_recall":  { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "evidence_trace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_pattern", "relation_observed", "ambiguity_context"],
+      "properties": {
+        "evidence_pattern":  { "type": ["string", "null"] },
+        "relation_observed": { "type": ["string", "null"] },
+        "ambiguity_context": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

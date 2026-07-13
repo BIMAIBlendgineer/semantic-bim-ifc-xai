@@ -2,6 +2,9 @@
 
 ## Summary
 
+> [!NOTE]
+> The initial `schema_minimal.json` (minimal public contract) and validation rules referenced in this historical release have been replaced by the `strict public sample20 v2 contract using JSON Schema Draft 2020-12` (`sample20/schema_public_sample20_v2.json`).
+
 This release updates the public reproducibility package after `v0.1-public-sample20`.
 
 It strengthens the public validation layer and improves repository navigability. It does not introduce a new dataset, trained model, private adapter, production service or final benchmark.

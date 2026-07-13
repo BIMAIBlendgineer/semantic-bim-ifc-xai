@@ -13,3 +13,19 @@ This directory contains folders for Hugging Face Spaces mirrors and interactive 
 
 ## Related files
 - `harness/README.md`: The backend validation scripts documentation.
+
+---
+
+## Public Sample and Demo Note
+
+The interactive applications in this folder conform to the strict public sample20 v2 contract using JSON Schema Draft 2020-12 (defined in `sample20/schema_public_sample20_v2.json`).
+
+Expected metrics are:
+- **Record Count**: 20 records;
+- **Valid Cases**: 18 valid cases;
+- **Expected Rejections**: 2 expected canonical rejections;
+- **Canonical Validation Rate**: `canonical_validation_rate = 0.9`;
+- **Expectation Met Rate**: `expectation_met_rate = 1.0`;
+- **Status**: `status = PUBLIC_SAMPLE_VALID_WITH_EXPECTED_NEGATIVES`.
+
+All 1.0 metrics indicate internal agreement with the stored synthetic reference, not a final benchmark, production deployment, or certification. This is an academic research artifact, not a final benchmark, not a product, and does not claim production readiness or certification.

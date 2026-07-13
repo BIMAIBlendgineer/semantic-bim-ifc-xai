@@ -6,32 +6,10 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from public_sample20_v2 import validate_records
 
-REQUIRED_KEYS = {
-    "ok",
-    "canonical_output",
-    "validation",
-    "sample_id",
-    "parsed_output",
-    "expected_output",
-}
-
-
-def load_jsonl(path: Path) -> list[dict[str, Any]]:
-    records: list[dict[str, Any]] = []
-    with path.open("r", encoding="utf-8") as handle:
-        for line_number, line in enumerate(handle, start=1):
-            text = line.strip()
-            if not text:
-                continue
-            try:
-                value = json.loads(text)
-            except json.JSONDecodeError as exc:
-                raise SystemExit(f"JSON_PARSE_ERROR line={line_number}: {exc}") from exc
-            if not isinstance(value, dict):
-                raise SystemExit(f"JSON_OBJECT_REQUIRED line={line_number}")
-            records.append(value)
-    return records
+# Add parent or harness directory to path just in case
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 
 def resolve_sample_file(path: Path) -> Path:
@@ -46,18 +24,18 @@ def resolve_sample_file(path: Path) -> Path:
 
 def resolve_schema_file(sample_path: Path) -> Path | None:
     if sample_path.is_dir():
-        candidate = sample_path / "schema_minimal.json"
+        candidate = sample_path / "schema_public_sample20_v2.json"
         if candidate.exists():
             return candidate
     else:
-        candidate = sample_path.with_name("schema_minimal.json")
+        candidate = sample_path.with_name("schema_public_sample20_v2.json")
         if candidate.exists():
             return candidate
     return None
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Replay the public sample20 dataset.")
+    parser = argparse.ArgumentParser(description="Replay the public sample20 v2 dataset.")
     parser.add_argument("--sample", required=True, help="Path to sample20/ or the JSONL file.")
     args = parser.parse_args(argv)
 
@@ -65,89 +43,60 @@ def main(argv: list[str] | None = None) -> int:
     sample_file = resolve_sample_file(sample_input)
     schema_file = resolve_schema_file(sample_input if sample_input.is_dir() else sample_file)
 
-    records = load_jsonl(sample_file)
-    schema = None
-    if schema_file is not None:
-        with schema_file.open("r", encoding="utf-8") as handle:
-            schema = json.load(handle)
+    if not schema_file or not schema_file.exists():
+        print(f"ERROR: schema file not found", file=sys.stderr)
+        return 1
 
-    required_keys = set(REQUIRED_KEYS)
-    if isinstance(schema, dict):
-        required_keys.update(key for key in schema.get("required", []) if isinstance(key, str))
+    try:
+        with schema_file.open("r", encoding="utf-8") as sf:
+            schema = json.load(sf)
+    except Exception as exc:
+        print(f"ERROR reading schema: {exc}", file=sys.stderr)
+        return 1
 
-    schema_ok = True
-    replay_ok = bool(records)
-    errors: list[str] = []
+    # Load records using the common loader
+    # load_records in public_sample20_v2 expects path: Path. But wait, in public_sample20_v2 we wrote load_records() without params that uses SAMPLE_PATH.
+    # Let's write a local helper or adjust it.
+    records: list[dict[str, Any]] = []
+    with sample_file.open("r", encoding="utf-8") as handle:
+        for line_number, line in enumerate(handle, start=1):
+            text = line.strip()
+            if not text:
+                continue
+            try:
+                records.append(json.loads(text))
+            except json.JSONDecodeError as exc:
+                print(f"JSON_PARSE_ERROR line={line_number}: {exc}", file=sys.stderr)
+                return 1
 
-    for idx, record in enumerate(records):
-        record_errors = []
-        # Check required keys
-        missing_keys = required_keys - record.keys()
-        if missing_keys:
-            record_errors.append(f"Missing required keys: {list(missing_keys)}")
-        else:
-            # Validate types and values
-            if record.get("ok") is not True:
-                record_errors.append("ok is not True")
+    ok, errors, metrics = validate_records(records, schema)
 
-            canonical = record.get("canonical_output")
-            if not isinstance(canonical, dict):
-                record_errors.append("canonical_output is not a dict")
-            else:
-                if "evidence_trace" not in canonical:
-                    record_errors.append("Missing evidence_trace in canonical_output")
-                else:
-                    ev_trace = canonical.get("evidence_trace")
-                    if ev_trace is None:
-                        record_errors.append("evidence_trace is null")
-                    elif isinstance(ev_trace, (list, dict, str)) and len(ev_trace) == 0:
-                        record_errors.append("evidence_trace is empty")
-                    elif not isinstance(ev_trace, (list, dict, str)):
-                        record_errors.append("evidence_trace is not a valid container/string")
-
-            validation = record.get("validation")
-            if not isinstance(validation, dict):
-                record_errors.append("validation is not a dict")
-            elif validation.get("ok") is not True:
-                record_errors.append("validation.ok is not True")
-
-            sample_id = record.get("sample_id")
-            if not isinstance(sample_id, str):
-                record_errors.append("sample_id is not a string")
-            elif not sample_id.strip():
-                record_errors.append("sample_id is empty")
-
-            if not isinstance(record.get("parsed_output"), dict):
-                record_errors.append("parsed_output is not a dict")
-
-            if not isinstance(record.get("expected_output"), dict):
-                record_errors.append("expected_output is not a dict")
-
-        if record_errors:
-            schema_ok = False
-            errors.append(f"Record {idx}: " + " | ".join(record_errors))
-
-        if record.get("ok") is not True:
-            replay_ok = False
-
-    replay_passed = replay_ok and schema_ok
-
-    print("SEMANTIC_XAIBIM_PUBLIC_REPLAY")
-    print(f"sample={sample_file}")
+    # Replay outputs expected:
+    # SEMANTIC_XAIBIM_PUBLIC_REPLAY_V2
+    # records=20
+    # valid_cases=18
+    # expected_rejections=2
+    # expectation_met_rate=1.0
+    # schema=PASS
+    # integrity=PASS
+    # status=PUBLIC_SAMPLE20_V2_VALID
+    
+    print("SEMANTIC_XAIBIM_PUBLIC_REPLAY_V2")
     print(f"records={len(records)}")
-    print(f"json_parse={'PASS' if len(records) > 0 else 'FAIL'}")
-    print(f"schema={'PASS' if schema_ok else 'FAIL'}")
-    print(f"replay={'PASS' if replay_passed else 'FAIL'}")
-    print(f"status={'REPLAY_OK' if replay_passed else 'REPLAY_FAIL'}")
+    print(f"valid_cases={metrics.get('valid_case_count', 0)}")
+    print(f"expected_rejections={metrics.get('expected_canonical_rejection_count', 0)}")
+    print(f"expectation_met_rate={metrics.get('expectation_met_rate', 0.0):.1f}")
+    print(f"schema={'PASS' if ok else 'FAIL'}")
+    print(f"integrity={'PASS' if ok else 'FAIL'}")
+    print(f"status={'PUBLIC_SAMPLE20_V2_VALID' if ok else 'PUBLIC_SAMPLE20_V2_INVALID'}")
 
-    if not replay_passed and errors:
-        print("\nReplay validation errors:", file=sys.stderr)
-        for err in errors[:10]:
+    if not ok:
+        print("\nValidation errors found:", file=sys.stderr)
+        for err in errors[:20]:
             print(f"  {err}", file=sys.stderr)
-        if len(errors) > 10:
-            print(f"  ... and {len(errors) - 10} more errors", file=sys.stderr)
+        return 1
 
-    return 0 if replay_passed else 1
+    return 0
 
 
 if __name__ == "__main__":

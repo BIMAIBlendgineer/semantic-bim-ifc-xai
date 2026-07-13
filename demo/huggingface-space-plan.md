@@ -1,11 +1,11 @@
-﻿# Hugging Face Space Plan
+# Hugging Face Space Plan
 
 Purpose:
 
 - Provide an interactive public replay of Semantic XAIBIM examples.
 - Show reduced public predictions.
 - Show aggregated metrics.
-- Explain RESEARCH_PASS.
+- Explain PUBLIC_SAMPLE_VALID_WITH_EXPECTED_NEGATIVES.
 - Avoid exposing raw training workspaces or model adapters.
 
 Initial implementation can use Gradio with static JSONL examples.

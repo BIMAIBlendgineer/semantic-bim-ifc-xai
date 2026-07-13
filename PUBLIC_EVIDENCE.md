@@ -4,14 +4,14 @@ This repository contains a public, reduced, and sanitized evidence layer for the
 
 ## Current public status
 
-`RESEARCH_PASS`
+`PUBLIC_SAMPLE_VALID_WITH_EXPECTED_NEGATIVES`
 
 ## Public Executable Checks
 
 | Check | Public executable? | Command/path | Status | Notes |
 | --- | --- | --- | --- | --- |
 | JSON parse | yes | `python harness/schema_validator.py sample20/sample20_public_records.jsonl` | PASS | 20 records successfully parsed |
-| Minimal public contract validation | yes | `python harness/schema_validator.py sample20/sample20_public_records.jsonl` | PASS | Verified types, values, and required schema keys |
+| Strict public sample20 v2 contract validation (JSON Schema Draft 2020-12) | yes | `python harness/schema_validator.py sample20/sample20_public_records.jsonl --schema sample20/schema_public_sample20_v2.json` | PASS | Validated against strict public sample20 v2 contract |
 | Replay | yes | `python harness/replay.py --sample sample20/` | PASS | Deterministic public replay completed successfully |
 | Evidence trace presence | yes | `python harness/schema_validator.py sample20/sample20_public_records.jsonl` | PASS | Verified presence and non-emptiness of evidence_trace |
 | Forbidden pattern scan | yes | `python scripts/public_forbidden_scan.py` | PASS | Scans tracked files for forbidden patterns and credentials |
@@ -35,6 +35,15 @@ The evidence does not claim:
 
 - Product readiness.
 - Normative certification.
-- Full BIM compliance.
 - Deployment approval.
 - Exhaustive benchmark coverage.
+
+## Dataset Structure and Metrics Wording
+
+The public `sample20` dataset contains 20 records: 18 valid cases and 2 expected canonical rejections.
+- The `canonical_validation_rate` is 0.9 (18/20) because the two expected negative cases are rejected as intended.
+- The `expectation_met_rate` is 1.0 (20/20) since the model's actual status matches the expected case expectation in all 20 records.
+- All 1.0 metrics indicate consistency within this reduced sample, not general model performance or generalization.
+- The `sample20` dataset is not a complete corpus and is not a final benchmark.
+- No private datasets, checkpoints, adapters or secrets are included.
+
